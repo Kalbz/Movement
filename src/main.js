@@ -1,17 +1,6 @@
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
-import './tailwind.css'
+import './index.css';
+import { getTheme } from './generators/themeGenerator.js';
 
-
-document.querySelector('#app').innerHTML = `
-  <div>
-
-    <p>
-      We're not just making a portfolio.
-      We're making a damn movement.
-    </p>
-  </div>
-`
-
-setupCounter(document.querySelector('#counter'))
+const theme = getTheme();
+document.documentElement.setAttribute("data-theme", theme);
+document.getElementById("theme-name").textContent = theme;

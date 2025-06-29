@@ -1,13 +1,43 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    
+    <title>My App</title>
+    
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- Root for your JS-injected content -->
+    </div>
+
+    <div class="text-secondary font-bold">
+  Current theme: <span id="theme-name"></span>
+</div>
+
+
+<div class="p-8 space-y-4">
+  <h1 class="text-3xl font-bold text-primary">Welcome to the Theme Machine</h1>
+  
+  <button class="btn btn-primary">Primary Button</button>
+  <button class="btn btn-secondary">Secondary Button</button>
+  <button class="btn btn-accent">Accent Button</button>
+
+  <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">Card Title</h2>
+      <p>This is a card that will inherit the background and text styles from the current theme.</p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-sm btn-outline btn-info">Info</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- JS module loaded after DOM -->
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
