@@ -1,6 +1,5 @@
-import './index.css';
-import { getTheme } from './generators/themeGenerator.js';
+import { randomTheme } from './generators/themeGenerator';
+import './style.css'
 
-const theme = getTheme();
-document.documentElement.setAttribute("data-theme", theme);
-document.getElementById("theme-name").textContent = theme;
+randomTheme();
+
