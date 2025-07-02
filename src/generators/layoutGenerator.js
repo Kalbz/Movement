@@ -1,10 +1,18 @@
+import { createCarousel } from "../components/carousel";
+import { createHero } from "../components/hero";
+
 export function randomLayout() {
     const container = document.getElementById('app');
     container.innerHTML = '';
 
+    const hero = createHero();
+    container.appendChild(hero);
+
+    const carousel = createCarousel();
+    container.appendChild(carousel);
+
     const layoutType = Math.random() < 0.5 ? 'grid' : 'flex';
 
-    console.log(layoutType);
 
     container.className = layoutType === 'grid'
     ? 'grid grid-cols-2 md:grid-cols-4 gap-6 p-6 bg-base-200 border-4 border-dashed border-secondary rounded-box'
