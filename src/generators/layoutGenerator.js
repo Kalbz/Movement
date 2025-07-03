@@ -1,5 +1,6 @@
 import { createCarousel } from "../components/carousel";
 import { createHero } from "../components/hero";
+import { createAvatar } from "../components/avatar";
 
 export function randomLayout() {
     const container = document.getElementById('app');
@@ -10,6 +11,9 @@ export function randomLayout() {
 
     const carousel = createCarousel();
     container.appendChild(carousel);
+
+    const avatar = createAvatar();
+    container.appendChild(avatar);
 
     const layoutType = Math.random() < 0.5 ? 'grid' : 'flex';
 
