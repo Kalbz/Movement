@@ -6,7 +6,7 @@ import { randomLayout } from './generators/layoutGenerator';
 import './style.css'
 
 randomLayout();
-// randomFont();
+randomFont();
 randomTheme();
 // randomGradient();
 // randomGradientCircle();
