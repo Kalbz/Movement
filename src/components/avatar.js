@@ -9,7 +9,7 @@ export function createAvatar() {
     : 'https://img.daisyui.com/images/profile/demo/yellingcat@192.webp';
 
     avatar.innerHTML = `
-    <div class="w24 ${shape}">
+    <div class="${shape}">
         <img src="${imgSrc}" />
     </div>
     `
