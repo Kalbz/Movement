@@ -5,6 +5,7 @@ import { createCarousel } from "../components/carousel.js";
 import { createAvatar } from "../components/avatar.js";
 import { createFooter } from "../components/footer.js";
 import { createBoxes } from "../components/boxes.js";
+import { createCard } from "../components/card.js";
 
 export function renderRandomLayout() {
   const app = document.getElementById("app");
@@ -34,6 +35,8 @@ export function renderRandomLayout() {
       case "Footer":
         element = createFooter();
         break;
+      case "Card":
+        element = createCard();
       default:
         console.warn(`Unknown section: ${section}`);
     }

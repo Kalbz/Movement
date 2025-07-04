@@ -7,4 +7,6 @@ export const layoutTemplates = [
   ['Navbar', 'Hero', 'Footer', 'Boxes'],
   ['Hero', 'Carousel' , 'Boxes'],
   ['Navbar', 'Hero', 'Carousel', 'Footer', 'Boxes']
+  ['Navbar', 'Hero', 'Carousel', 'Footer', 'Card']
+
 ];
