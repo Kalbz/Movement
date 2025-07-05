@@ -6,6 +6,8 @@ import { createAvatar } from "../components/avatar.js";
 import { createFooter } from "../components/footer.js";
 import { createBoxes } from "../components/boxes.js";
 import { createCard } from "../components/card.js";
+import { createAccordion } from "../components/accordion.js";
+import { createDiff } from "../components/diff.js";
 
 export function renderRandomLayout() {
   const app = document.getElementById("app");
@@ -37,6 +39,12 @@ export function renderRandomLayout() {
         break;
       case "Card":
         element = createCard();
+      case "Accordion":
+        element = createAccordion();
+        break;
+      case "Comparison":
+        element = createDiff();
+        break;
       default:
         console.warn(`Unknown section: ${section}`);
     }

@@ -1,12 +1,12 @@
 export const layoutTemplates = [
-  ['Navbar', 'Hero', 'Boxes'],
-  ['Hero', 'Footer', 'Boxes'],
-  ['Hero', 'Carousel', 'Footer', 'Boxes'],
-  ['Navbar', 'Hero', 'Carousel' , 'Boxes'],
-  ['Hero', 'Avatar', 'Footer', 'Boxes'],
-  ['Navbar', 'Hero', 'Footer', 'Boxes'],
-  ['Hero', 'Carousel' , 'Boxes'],
-  ['Navbar', 'Hero', 'Carousel', 'Footer', 'Boxes']
-  ['Navbar', 'Hero', 'Carousel', 'Footer', 'Card']
+  ['Comparison', 'Navbar', 'Hero', 'Boxes'],
+  ['Comparison', 'Hero', 'Footer', 'Boxes'],
+  ['Comparison', 'Hero', 'Carousel', 'Footer', 'Boxes'],
+  ['Comparison', 'Navbar', 'Hero', 'Carousel' , 'Boxes'],
+  ['Comparison', 'Hero', 'Avatar', 'Footer', 'Boxes'],
+  ['Comparison', 'Navbar', 'Hero', 'Footer', 'Boxes'],
+  ['Comparison', 'Hero', 'Carousel' , 'Boxes'],
+  ['Comparison', 'Navbar', 'Hero', 'Carousel', 'Footer', 'Boxes']
+  ['Comparison', 'Navbar', 'Hero', 'Carousel', 'Footer', 'Card']
 
 ];
