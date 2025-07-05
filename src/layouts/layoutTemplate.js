@@ -1,12 +1,14 @@
 export const layoutTemplates = [
-  ['Comparison', 'Navbar', 'Hero', 'Boxes'],
-  ['Comparison', 'Hero', 'Footer', 'Boxes'],
-  ['Comparison', 'Hero', 'Carousel', 'Footer', 'Boxes'],
-  ['Comparison', 'Navbar', 'Hero', 'Carousel' , 'Boxes'],
-  ['Comparison', 'Hero', 'Avatar', 'Footer', 'Boxes'],
-  ['Comparison', 'Navbar', 'Hero', 'Footer', 'Boxes'],
-  ['Comparison', 'Hero', 'Carousel' , 'Boxes'],
-  ['Comparison', 'Navbar', 'Hero', 'Carousel', 'Footer', 'Boxes']
-  ['Comparison', 'Navbar', 'Hero', 'Carousel', 'Footer', 'Card']
+  ['Divider', 'Comparison', 'Navbar', 'Hero', 'Boxes'],
+  ['Divider', 'Comparison', 'Hero', 'Footer', 'Boxes'],
+  ['Divider', 'Comparison', 'Hero', 'Carousel', 'Footer', 'Boxes'],
+  ['Divider', 'Comparison', 'Navbar', 'Hero', 'Carousel' , 'Boxes'],
+  ['Divider', 'Comparison', 'Hero', 'Avatar', 'Footer', 'Boxes'],
+  ['Divider', 'Comparison', 'Navbar', 'Hero', 'Footer', 'Boxes'],
+  ['Divider', 'Comparison', 'Hero', 'Carousel' , 'Boxes'],
+  ['Divider', 'Comparison', 'Navbar', 'Hero', 'Carousel', 'Footer', 'Boxes'],
+  ['Divider', 'Comparison', 'Navbar', 'Hero', 'Carousel', 'Footer', 'Card'],
+  ['Navbar', 'Hero', 'Carousel', 'Card', 'Divider', 'Boxes', 'Comparison', 'Divider']
+
 
 ];

@@ -8,12 +8,23 @@ import { createBoxes } from "../components/boxes.js";
 import { createCard } from "../components/card.js";
 import { createAccordion } from "../components/accordion.js";
 import { createDiff } from "../components/diff.js";
+import { createDivider } from "../components/divider.js";
 
 export function renderRandomLayout() {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
-  const layout = layoutTemplates[Math.floor(Math.random() * layoutTemplates.length)];
+    const layout = layoutTemplates[Math.floor(Math.random() * layoutTemplates.length)];
+
+    if (!layout || !Array.isArray(layout)) {
+    console.warn("Invalid layout:", layout);
+    return;
+    }
+
+
+console.log("layoutTemplates:", layoutTemplates);
+console.log("Selected layout:", layout);
+
 
   layout.forEach((section) => {
     let element;
@@ -39,12 +50,21 @@ export function renderRandomLayout() {
         break;
       case "Card":
         element = createCard();
+        break;
       case "Accordion":
         element = createAccordion();
         break;
       case "Comparison":
         element = createDiff();
         break;
+      case "Divider":
+        const cardA = createCard();
+        const cardB = createCard();
+
+        element = createDivider(cardA, cardB, {
+          vertical: true,
+          alignment: "center",
+        });
       default:
         console.warn(`Unknown section: ${section}`);
     }
