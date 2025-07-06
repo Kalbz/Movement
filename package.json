@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "daisyui": "^5.0.43",
-    "theme-change": "^2.5.0"
+    "theme-change": "^2.5.0",
+    "trianglify": "^4.1.1"
   }
 }

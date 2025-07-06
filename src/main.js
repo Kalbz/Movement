@@ -4,6 +4,7 @@ import { randomGradient } from './generators/gradientGenerator';
 import { randomGradientCircle } from './generators/gradientCircleGenerator';
 import { randomLayout } from './generators/layoutGenerator';
 import { renderRandomLayout } from './layouts/renderRandomLayout.js';
+import { randomBackground } from './generators/backgroundGenerator.js';
 import './style.css'
 
 // randomLayout();
@@ -13,3 +14,6 @@ renderRandomLayout();
 // randomGradient();
 // randomGradientCircle();
 
+window.addEventListener('DOMContentLoaded', () => {
+    randomBackground();
+});
