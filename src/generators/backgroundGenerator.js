@@ -1,38 +1,48 @@
-import trianglify from "trianglify";
+import trianglify from 'trianglify';
+import themeColors from '../components/themeColors.js';
 
-export function randomBackground(targetSelector = "body") {
-  const palettes = [
-    "random",
-    ["#ffafcc", "#ffc8dd", "#bde0fe"],
-    ["#caffbf", "#9bf6ff", "#a0c4ff"],
-    ["#fcd5ce", "#f8edeb", "#e8a598"]
-  ];
-
-  const xColors = palettes[Math.floor(Math.random() * palettes.length)];
-  const yColors = xColors === "random" ? "random" : xColors;
+export function randomBackground(selector = 'body') {
+  const theme = document.documentElement.getAttribute('data-theme') || 'light';
+  const palette = themeColors[theme] 
+    || ['#ffffff','#e8e8e8','#d1d1d1','#3b82f6','#9333ea'];
 
   const pattern = trianglify({
-    width: window.innerWidth,
-    height: window.innerHeight,
-    cellSize: Math.random() * 60 + 20,
-    variance: Math.random(),
-    seed: Math.random().toString(),
-    xColors,
-    yColors,
-    colorSpace: "lab"
+    width:     window.innerWidth,
+    height:    window.innerHeight,
+    cellSize:  60,
+    variance:  0.8,
+    strokeWidth: 1,
+    seed:      Math.random().toString(),
+    xColors:   palette,
+    yColors:   'match'
   });
 
-  const svg = pattern.toSVG();
-  const xml = new XMLSerializer().serializeToString(svg);
-  const uri = `data:image/svg+xml;base64,${btoa(xml)}`;
+  console.log(
+  '▶️ points:', pattern.points.length,
+  '│ polys:',  pattern.polys.length);
 
-  const elem = document.querySelector(targetSelector);
-  if (elem) {
-    Object.assign(elem.style, {
-      backgroundImage: `url("${uri}")`,
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center"
-    });
-  }
+  console.log(
+  '▶️ sample colors:',
+  pattern.polys.slice(0,5).map(p => p.color.hex())
+);
+
+const canvas = pattern.toCanvas();
+canvas.style.position = 'absolute';
+canvas.style.top = '0';
+canvas.style.left = '0';
+canvas.style.zIndex = -1;
+document.body.appendChild(canvas);
+
+console.log('canvas CSS:', {
+  position: canvas.style.position,
+  zIndex:   canvas.style.zIndex,
+  opacity:  window.getComputedStyle(canvas).opacity,
+});
+console.log('body stacking context:', window.getComputedStyle(document.body).getPropertyValue('opacity'));
+console.log('points:', pattern.points.length, 'polys:', pattern.polys.length);
+
+  const svg = new XMLSerializer().serializeToString(pattern.toSVG());
+  const uri = `data:image/svg+xml;base64,${btoa(svg)}`;
+  document.querySelector(selector)
+    ?.style.setProperty('background-image', `url("${uri}")`);
 }

@@ -1,19 +1,20 @@
+// main.js
 import { randomTheme } from './generators/themeGenerator';
+import { randomBackground } from './generators/backgroundGenerator';
+import { buildThemeColorMap } from './parsers/oklchToHex';
 import { randomFont } from './generators/fontGenerator';
-import { randomGradient } from './generators/gradientGenerator';
-import { randomGradientCircle } from './generators/gradientCircleGenerator';
-import { randomLayout } from './generators/layoutGenerator';
-import { renderRandomLayout } from './layouts/renderRandomLayout.js';
-import { randomBackground } from './generators/backgroundGenerator.js';
-import './style.css'
+import { renderRandomLayout } from './layouts/renderRandomLayout';
+import './style.css';
 
-// randomLayout();
-randomFont();
-randomTheme();
-renderRandomLayout();
-// randomGradient();
-// randomGradientCircle();
-
-window.addEventListener('DOMContentLoaded', () => {
-    randomBackground();
-});
+(async function init() {
+  // 1) Build the color map once
+  const themeColors = await buildThemeColorMap();  
+  // 2) Set a random theme
+  randomFont();
+  randomTheme();                   
+  renderRandomLayout();                   
+  // 3) Wait for the browser to apply CSS var changes
+  await new Promise(r => requestAnimationFrame(r));   
+  // 4) Finally, render the background
+  randomBackground();                      
+})();
