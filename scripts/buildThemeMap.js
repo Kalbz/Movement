@@ -47,4 +47,3 @@ for (const [themeName, colors] of Object.entries(themes)) {
 const outPath = path.resolve(__dirname, '../src/themeColors.json');
 fs.writeFileSync(outPath, JSON.stringify(map, null, 2));
 
-console.log(`✅ Wrote theme map for ${Object.keys(map).length} themes to ${outPath}`);

@@ -1,9 +1,26 @@
 export function createCarousel() {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'flex justify-center mb-6';
+
   const carousel = document.createElement('div');
-  carousel.className = 'carousel rounded-box mb-6';
+  carousel.className = 'carousel carousel-center gap-4 rounded-box';
 
   carousel.innerHTML = `
     ${[
+      'photo-1559703248-dcaaec9fab78',
+      'photo-1565098772267-60af42b81ef2',
+      'photo-1572635148818-ef6fd45eb394',
+      'photo-1494253109108-2e30c049369b',
+      'photo-1550258987-190a2d41a8ba',
+      'photo-1559181567-c3190ca9959b',
+      'photo-1601004890684-d8cbf643f5f2',
+      'photo-1559703248-dcaaec9fab78',
+      'photo-1565098772267-60af42b81ef2',
+      'photo-1572635148818-ef6fd45eb394',
+      'photo-1494253109108-2e30c049369b',
+      'photo-1550258987-190a2d41a8ba',
+      'photo-1559181567-c3190ca9959b',
+      'photo-1601004890684-d8cbf643f5f2',
       'photo-1559703248-dcaaec9fab78',
       'photo-1565098772267-60af42b81ef2',
       'photo-1572635148818-ef6fd45eb394',
@@ -24,5 +41,6 @@ export function createCarousel() {
       .join('')}
   `;
 
-  return carousel;
+  wrapper.appendChild(carousel);
+  return wrapper;
 }

@@ -9,6 +9,7 @@ import { createCard } from "../components/card.js";
 import { createAccordion } from "../components/accordion.js";
 import { createDiff } from "../components/diff.js";
 import { createDivider } from "../components/divider.js";
+import { createTable } from "../components/table.js";
 
 export function renderRandomLayout() {
   const app = document.getElementById("app");
@@ -54,6 +55,9 @@ console.log("Selected layout:", layout);
       case "Accordion":
         element = createAccordion();
         break;
+      case "Table":
+        element = createTable();
+        break;
       case "Comparison":
         element = createDiff();
         break;
@@ -63,8 +67,9 @@ console.log("Selected layout:", layout);
 
         element = createDivider(cardA, cardB, {
           vertical: true,
-          alignment: "center",
+          // alignment: "center",
         });
+        break;
       default:
         console.warn(`Unknown section: ${section}`);
     }

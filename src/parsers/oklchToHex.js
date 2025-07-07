@@ -47,6 +47,5 @@ export async function buildThemeColorMap() {
     map[theme] = colors;
   }
 
-  console.log('Theme color map:', map);
   return map;
 }

@@ -17,14 +17,7 @@ export function randomBackground(selector = 'body') {
     yColors:   'match'
   });
 
-  console.log(
-  '▶️ points:', pattern.points.length,
-  '│ polys:',  pattern.polys.length);
 
-  console.log(
-  '▶️ sample colors:',
-  pattern.polys.slice(0,5).map(p => p.color.hex())
-);
 
 const canvas = pattern.toCanvas();
 canvas.style.position = 'absolute';
@@ -33,16 +26,13 @@ canvas.style.left = '0';
 canvas.style.zIndex = -1;
 document.body.appendChild(canvas);
 
-console.log('canvas CSS:', {
-  position: canvas.style.position,
-  zIndex:   canvas.style.zIndex,
-  opacity:  window.getComputedStyle(canvas).opacity,
-});
-console.log('body stacking context:', window.getComputedStyle(document.body).getPropertyValue('opacity'));
-console.log('points:', pattern.points.length, 'polys:', pattern.polys.length);
 
   const svg = new XMLSerializer().serializeToString(pattern.toSVG());
   const uri = `data:image/svg+xml;base64,${btoa(svg)}`;
   document.querySelector(selector)
     ?.style.setProperty('background-image', `url("${uri}")`);
+    //hepl me to no repeat
+  document.querySelector(selector)
+    ?.style.setProperty('background-repeat', 'repeat-x');
+    
 }

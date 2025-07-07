@@ -15,23 +15,29 @@ export function createDivider(left, right, options = {}) {
     "divider-success",
     "divider-warning",
     "divider-info",
-    "divider-error"
+    "divider-error",
   ];
 
   // 🔀 Randomly choose one
-  const randomColor = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+  const randomColor =
+    colorOptions[Math.floor(Math.random() * colorOptions.length)];
 
   // Set wrapper layout
-  wrapper.className = isVertical ? "flex w-full items-center gap-4 my-6" : "flex w-full flex-col gap-2 my-6";
-
+  wrapper.className = isVertical
+    ? // row layout: center items on both axes
+      "flex w-full items-center justify-center gap-4 my-6"
+    : // column layout: stack, then center horizontally
+      "flex w-full flex-col items-center gap-2 my-6";
   // Create divider
   const divider = document.createElement("div");
   divider.className = [
     "divider",
     isVertical ? "divider-horizontal" : "",
     alignment !== "center" ? `divider-${alignment}` : "",
-    randomColor
-  ].join(" ").trim();
+    randomColor,
+  ]
+    .join(" ")
+    .trim();
 
   divider.textContent = dividerText;
 

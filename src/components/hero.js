@@ -2,6 +2,10 @@ export function createHero() {
   const hero = document.createElement('div');
   hero.className = 'hero bg-base-200 min-h-screen rounded-box mb-6';
 
+  hero.className = Math.random() < 0.5
+    ? 'hero bg-base-200 min-h-screen rounded-box mb-6'
+    : 'hero min-h-screen rounded-box mb-6';
+
   const heroTemplates = [
     `
     <div class="hero-content text-center">
