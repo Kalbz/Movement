@@ -9,12 +9,12 @@ import './style.css';
 (async function init() {
   // 1) Build the color map once
   const themeColors = await buildThemeColorMap();  
-  // 2) Set a random theme
+  // 2) Set a random theme, font and layout
   randomFont();
   randomTheme();                   
   renderRandomLayout();                   
   // 3) Wait for the browser to apply CSS var changes
   await new Promise(r => requestAnimationFrame(r));   
-  // 4) Finally, render the background
+  // 4) render the background
   randomBackground();                      
 })();

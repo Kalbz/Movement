@@ -1,16 +1,10 @@
-// scripts/buildThemeMap.js
+// WIP, not working atm, doing it manually for now
 
 import fs from 'fs';
 import path from 'path';
 
-// 1. Import DaisyUI's theme definitions
-
-
-// 2. (Optional) If you want to normalize any CSS color strings,
-//    you can use 'culori' here. Otherwise, most DaisyUI values are hex.
 import { parse, formatHex } from 'culori';
 
-// 3. Decide which vars you want in each palette:
 const slots = [
   'base-100',
   'base-200',
@@ -30,7 +24,6 @@ const themes = [
 const map = {};
 
 for (const [themeName, colors] of Object.entries(themes)) {
-  // 4. Extract and normalize
   const palette = slots
     .map(slot => {
       const raw = colors[`--${themeName}-${slot}`] || colors[slot] || null;
@@ -43,7 +36,6 @@ for (const [themeName, colors] of Object.entries(themes)) {
   map[themeName] = palette;
 }
 
-// 5. Write to disk
 const outPath = path.resolve(__dirname, '../src/themeColors.json');
 fs.writeFileSync(outPath, JSON.stringify(map, null, 2));
 

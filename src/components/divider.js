@@ -3,9 +3,8 @@ export function createDivider(left, right, options = {}) {
 
   const isVertical = options.vertical ?? false;
   const dividerText = options.text ?? "";
-  const alignment = options.alignment ?? "center"; // 'start' | 'center' | 'end'
+  const alignment = options.alignment ?? "center";
 
-  // 🟡 Define possible daisyUI colors
   const colorOptions = [
     "", // default
     "divider-neutral",
@@ -18,17 +17,13 @@ export function createDivider(left, right, options = {}) {
     "divider-error",
   ];
 
-  // 🔀 Randomly choose one
   const randomColor =
     colorOptions[Math.floor(Math.random() * colorOptions.length)];
 
-  // Set wrapper layout
   wrapper.className = isVertical
-    ? // row layout: center items on both axes
-      "flex w-full items-center justify-center gap-4 my-6"
-    : // column layout: stack, then center horizontally
-      "flex w-full flex-col items-center gap-2 my-6";
-  // Create divider
+    ? "flex w-full items-center justify-center gap-4 my-6"
+    : "flex w-full flex-col items-center gap-2 my-6";
+
   const divider = document.createElement("div");
   divider.className = [
     "divider",
@@ -41,7 +36,6 @@ export function createDivider(left, right, options = {}) {
 
   divider.textContent = dividerText;
 
-  // Append elements
   wrapper.appendChild(left);
   wrapper.appendChild(divider);
   wrapper.appendChild(right);

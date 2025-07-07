@@ -1,5 +1,3 @@
-// src/components/boxes.js
-
 export function createBoxes() {
   const wrapper = document.createElement('div');
   const layoutType = Math.random() < 0.5 ? 'grid' : 'flex';
