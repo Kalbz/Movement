@@ -6,7 +6,7 @@ export function createCard() {
 
   // build the wrapper DIV
   const card = document.createElement('div');
-  card.className = 'card w-96 shadow-sm overflow-hidden';
+  card.className = 'card w-96 mx-auto shadow-sm overflow-hidden';
   // set the trianglify pattern as the *background* of the card
   card.style.backgroundImage = `url("${triUrl}")`;
   card.style.backgroundSize  = 'cover';
