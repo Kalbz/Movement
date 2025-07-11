@@ -3,7 +3,7 @@ export function createBoxes() {
   const layoutType = Math.random() < 0.5 ? 'grid' : 'flex';
 
   wrapper.className = layoutType === 'grid'
-    ? 'grid grid-cols-2 md:grid-cols-4 gap-6 p-6 bg-base-200 border-4 border-dashed border-secondary rounded-box'
+    ? 'grid grid-cols-4 md:grid-cols-4 gap-6 p-6 bg-base-200 border-4 border-dashed border-secondary rounded-box'
     : 'flex flex-wrap justify-center gap-6 p-6 bg-base-300 border-4 border-dotted border-accent rounded-box';
 
   const numItems = Math.floor(Math.random() * 5) + 4;
