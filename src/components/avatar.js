@@ -1,17 +1,14 @@
-export function createAvatar() {
-    const avatar = document.createElement("div");
-    avatar.className = "avatar";
+export function createAvatar({ shape = 'rounded-full', size = "w-96 h-96" } = {}) {
+  const avatar = document.createElement("div");
+  avatar.className = `avatar ${size}`;
 
-    const shape = Math.random() < 0.5 ? 'rounded-xl' : 'rounded-full';
+  const img = document.createElement("div");
+  img.className = `${shape} overflow-hidden`;
 
-    const imgSrc = shape === 'rounded-xl'
+  img.innerHTML = `<img src="${shape === 'rounded-xl'
     ? 'https://img.daisyui.com/images/profile/demo/yellingwoman@192.webp'
-    : 'https://img.daisyui.com/images/profile/demo/yellingcat@192.webp';
+    : 'https://img.daisyui.com/images/profile/demo/yellingcat@192.webp'}" />`;
 
-    avatar.innerHTML = `
-    <div class="${shape}">
-        <img src="${imgSrc}" />
-    </div>
-    `
+  avatar.appendChild(img);
   return avatar;
 }

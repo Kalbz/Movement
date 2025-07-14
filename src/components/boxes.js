@@ -11,8 +11,10 @@ export function createBoxes() {
   for (let i = 0; i < numItems; i++) {
     const box = document.createElement('div');
 
-    const width = Math.random() < 0.5 ? 'w-32' : 'w-48';
-    const height = Math.random() < 0.5 ? 'h-32' : 'h-48';
+    // const width = Math.random() < 0.5 ? 'w-32' : 'w-48';
+    // const height = Math.random() < 0.5 ? 'h-32' : 'h-48';
+    const width = 'w-48';
+    const height = 'w-48';
     const bg = i % 2 === 0 ? 'bg-primary' : 'bg-secondary';
 
     box.className = `
