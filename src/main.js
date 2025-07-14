@@ -16,5 +16,5 @@ import './style.css';
   // 3) Wait for the browser to apply CSS var changes
   await new Promise(r => requestAnimationFrame(r));   
   // 4) render the background
-  // randomBackground();                      
+  randomBackground();                      
 })();

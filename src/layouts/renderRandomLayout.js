@@ -15,10 +15,26 @@ import { createText } from "../components/text.js";
 import { createLongText } from "../components/longText.js";
 import { createSpacer } from "../components/spacer.js";
 
-function createComponentFromName(name, layout = {}, props = {}) {
+export function createComponentFromName(name, layout = {}, props = {}) {
   switch (name) {
     case "Navbar": return createNavbar();
-    case "Hero": return createHero();
+    case "Hero": {
+      // Handle Hero with children
+      if (layout.children && Array.isArray(layout.children)) {
+        const children = layout.children.map(child => {
+          if (child.type) {
+            return createComponentFromName(child.type, child.layout || {}, child.props || {});
+          }
+          return null;
+        }).filter(Boolean);
+        
+        // Check if template mode is specified
+        const templateIndex = layout.template !== undefined ? layout.template : null;
+        return createHero({ children, layout, template: templateIndex });
+      }
+      // Fallback to original random hero
+      return createHero();
+    }
     case "Carousel": return createCarousel();
     case "Avatar": return createAvatar();
     case "Boxes": return createBoxes();
