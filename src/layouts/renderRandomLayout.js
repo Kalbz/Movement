@@ -14,6 +14,7 @@ import { wrapWithLayout } from "./layoutWrapper.js";
 import { createText } from "../components/text.js";
 import { createLongText } from "../components/longText.js";
 import { createSpacer } from "../components/spacer.js";
+import { createImage } from "../components/image.js";
 
 export function createComponentFromName(name, layout = {}, props = {}) {
   switch (name) {
@@ -42,6 +43,7 @@ export function createComponentFromName(name, layout = {}, props = {}) {
     case "Card": return createCard();
     case "Accordion": return createAccordion();
     case "Table": return createTable();
+    case "Image": return createImage(props);
     case "Comparison": return createDiff();
     case "Text":
       return createText(props);
