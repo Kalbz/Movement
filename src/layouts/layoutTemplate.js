@@ -1,12 +1,12 @@
-export const layoutTemplates = [
+// export const layoutTemplates = [
 
-    ['Navbar', 'Hero', 'Carousel', 'Divider', 'Boxes' , 'Card', 'Footer'],
-    ['Navbar', 'Divider', 'Divider', 'Hero', 'Divider','Divider','Divider','Divider','Divider','Divider','Divider','Divider', 'Footer'],
-    ['Comparison', 'Hero', 'Divider', 'Footer', ],
-    ['Hero', 'Divider', 'Hero', 'Footer'],
-    // ['Boxes', 'Footer'],
-    // ['Navbar', 'Avatar'],
-]
+//     // ['Navbar', 'Hero', 'Carousel', 'Divider', 'Boxes' , 'Card', 'Footer'],
+//     // ['Navbar', 'Divider', 'Divider', 'Hero', 'Divider','Divider','Divider','Divider','Divider','Divider','Divider','Divider', 'Footer'],
+//     // ['Comparison', 'Hero', 'Divider', 'Footer', ],
+//     // ['Hero', 'Divider', 'Hero', 'Footer'],
+//     // ['Boxes', 'Footer'],
+//     // ['Navbar', 'Avatar'],
+// ]
 
 
 //   // ['Navbar', 'Hero', 'Carousel', 'Avatar', 'Boxes', 'Footer', 'Card', 'Accordion', 'Table', 'Comparison', 'Divider'],
@@ -48,12 +48,11 @@ export const layoutTemplates = [
 // ];
 
 // export const layoutTemplates = [
-//   // Template mode: Use existing template with dynamic content
 //   [
 //     {
 //       type: "Hero",
 //       layout: {
-//         template: 0, // Use template 0 (centered text template)
+//         template: 0,
 //         children: [
 //           { type: "Text", props: { text: "Welcome to My Portfolio", size: "text-3xl", align: "center" } },
 //           { type: "Text", props: { text: "Check out my amazing work!", size: "text-xl", color: "text-secondary" } },
@@ -64,12 +63,11 @@ export const layoutTemplates = [
 //     { type: "Footer" }
 //   ],
   
-//   // Template mode: Use template 1 (side-by-side with images)
 //   [
 //     {
 //       type: "Hero",
 //       layout: {
-//         template: 1, // Use template 1 (side-by-side layout)
+//         template: 1,
 //         children: [
 //           { type: "Text", props: { text: "My Creative Work", size: "text-3xl", align: "center" } },
 //           { type: "Text", props: { text: "Exploring the boundaries of design and technology", size: "text-xl", color: "text-secondary" } },
@@ -79,7 +77,6 @@ export const layoutTemplates = [
 //     { type: "Footer" }
 //   ],
   
-//   // Template mode: Use template 4 (reverse layout)
 //   [
 //     {
 //       type: "Hero",
@@ -93,7 +90,7 @@ export const layoutTemplates = [
 //     }
 //   ],
   
-//   // Custom children mode: Completely custom layout
+
 //   [
 //     {
 //       type: "Hero",
@@ -142,3 +139,31 @@ export const layoutTemplates = [
 
   
 // ];
+
+// export const layoutTemplates = [
+//   [
+//     { type: "Navbar" },
+//     {
+//       type: "Hero",
+//       layout: {
+//         template: 1,
+//         children: [
+//           { type: "Text", props: { text: "Welcome to the Jungle", size: "text-4xl", align: "center" } },
+//           { type: "Text", props: { text: "Where creativity meets chaos.", size: "text-lg", color: "text-secondary" } },
+//         ]
+//       }
+//     },
+//     { type: "Spacer", layout: { direction: "vertical", size: "32" } },
+//     { type: "Avatar", layout: { align: "center", padding: "pt-4 pb-4", background: "bg-base-200" } },
+//     { type: "Carousel" },
+//     { type: "Boxes" },
+//     { type: "Card" },
+//     { type: "Accordion" },
+//     { type: "Comparison" },
+//     { type: "Table" },
+//     { type: "Divider" },
+//     { type: "Footer" }
+//   ],
+
+// ];
+

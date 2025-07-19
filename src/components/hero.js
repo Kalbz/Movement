@@ -1,12 +1,14 @@
 import { randomImage } from '../generators/randomImageGenerator.js';
 
-export function createHero({ children = [], layout = {}, template = null } = {}) {
+export function createHero({ children = [], layout = {}, template = null, textChildren = [] } = {}) {
+
   const hero = document.createElement('div');
   hero.className = 'hero min-h-screen rounded-box mb-6 relative flex items-center justify-center';
 
   // If template is specified, use template mode with dynamic content
   if (template !== null) {
-    return createTemplateHero(hero, template, children);
+    return createTemplateHero(hero, template, children, textChildren);
+
   }
 
   // If no children provided, use the original random templates
@@ -38,7 +40,7 @@ export function createHero({ children = [], layout = {}, template = null } = {})
 }
 
 // Template mode: Use existing templates but replace content dynamically
-function createTemplateHero(hero, templateIndex, children) {
+function createTemplateHero(hero, templateIndex, children, textChildren = []) {
   const { stockUrl, triUrl } = randomImage();
 
   const sizeOptions = ['max-w-sm', 'max-w-md', 'max-w-lg', 'max-w-xl', 'w-full', 'lg:w-1/2'];
@@ -56,8 +58,10 @@ function createTemplateHero(hero, templateIndex, children) {
   const image = Math.random() < 0.5 ? stockUrl : triUrl;
 
   // Get text content from children if available
-  const titleText = children[0]?.props?.text || "Dynamic Hero";
-  const subtitleText = children[1]?.props?.text || "This hero got a random background pattern and a random stock photo size.";
+const titleText = textChildren?.[0]?.props?.text || "Dynamic Hero";
+const subtitleText = textChildren?.[1]?.props?.text || "This hero got a random background.";
+
+
 
   const templates = [
     `
@@ -115,6 +119,7 @@ function createTemplateHero(hero, templateIndex, children) {
 
     
     `,
+// ==============================================================
 
     `
     <div class="hero-content flex flex-wrap justify-center items-center gap-4">
@@ -158,8 +163,6 @@ function createTemplateHero(hero, templateIndex, children) {
    // ==============================================================
  
     `
-
-
 
 <div class="absolute inset-0 z-0 pointer-events-none overflow-visible">
   <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
@@ -271,6 +274,7 @@ function createRandomHeroTemplate(hero) {
 
     
     `,
+// ==============================================================
 
     `
     <div class="hero-content flex flex-wrap justify-center items-center gap-4">
@@ -314,8 +318,6 @@ function createRandomHeroTemplate(hero) {
    // ==============================================================
  
     `
-
-
 
 <div class="absolute inset-0 z-0 pointer-events-none overflow-visible">
   <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">

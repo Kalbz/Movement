@@ -1,17 +1,21 @@
-// components/image.js
-import { randomImage } from '../generators/randomImageGenerator.js';
+import { fetchThemedImage } from '../generators/colorImageGenerator.js';
 
-export function createImage({ useStock = true, alt = "Random image", className = "" } = {}) {
-  const { stockUrl, triUrl } = randomImage();
+export async function createImage({
+  theme = "light",
+  alt = "Themed image",
+  className = "w-full max-w-2xl rounded-lg shadow-xl"
+} = {}) {
+  const stockUrl = await fetchThemedImage(theme);
+  const fallbackUrl = "https://source.unsplash.com/random/600x400";
 
   const image = document.createElement("img");
-  image.src = useStock ? stockUrl : triUrl;
+  image.src = stockUrl || fallbackUrl;
   image.alt = alt;
-  image.className = className || "w-full max-w-2xl rounded-lg shadow-xl";
+  image.className = className;
 
-  // Add a fallback: if stock fails, switch to trianglify
+  // Fallback if the themed image fails to load
   image.onerror = () => {
-    image.src = triUrl;
+    image.src = fallbackUrl;
   };
 
   return image;

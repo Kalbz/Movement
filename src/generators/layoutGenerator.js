@@ -47,3 +47,174 @@ export function randomLayout() {
     layoutWrapper.appendChild(box);
   }
 }
+
+
+export function generateRandomLayout() {
+  const layout = [];
+
+  const components = [
+    "Hero",
+    "Carousel",
+    "Boxes",
+    "Card",
+    "Accordion",
+    "Table",
+    "Comparison",
+    "Divider",
+    "Spacer",
+  ];
+
+  // Randomly decide if we want a Navbar
+  const includeNavbar = Math.random() < 0.7;
+  if (includeNavbar) {
+    layout.push({ type: "Navbar" });
+  }
+
+  let hasHero = false;
+
+  // We’ll collect some components, then insert Hero at a legal spot
+  const body = [];
+
+  // Shuffle components
+  for (let i = components.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [components[i], components[j]] = [components[j], components[i]];
+  }
+
+  for (const component of components) {
+    // Skip rules
+
+    // Accordion should not come directly after Navbar
+    if (
+      component === "Accordion" &&
+      layout[layout.length - 1]?.type === "Navbar"
+    ) {
+      continue;
+    }
+
+    // Card/Table should not come before Hero
+    if (!hasHero && (component === "Card" || component === "Table")) {
+      continue;
+    }
+
+    // Avatar is NOT allowed outside Hero
+    if (component === "Avatar") {
+      continue;
+    }
+
+    // Hero is special — insert once with optional Avatar
+    if (component === "Hero" && !hasHero) {
+      hasHero = true;
+
+      // Decide randomly if Avatar should be included
+      const includeAvatar = Math.random() < 0.5;
+
+      const children = [
+        {
+          type: "Text",
+          props: {
+            text: getRandomTitle(),
+            size: "text-4xl",
+            align: "center"
+          }
+        },
+        {
+          type: "Text",
+          props: {
+            text: getRandomSubtitle(),
+            size: "text-lg",
+            color: "text-secondary"
+          }
+        }
+      ];
+
+      if (includeAvatar) {
+        children.push({ type: "Avatar" });
+      }
+
+      layout.push({
+        type: "Hero",
+        layout: {
+          template: Math.floor(Math.random() * 5),
+          children
+        }
+      });
+      continue;
+    }
+
+    // Spacer with random size
+    if (component === "Spacer") {
+      body.push({
+        type: "Spacer",
+        layout: {
+          direction: "vertical",
+          size: String(Math.floor(Math.random() * 64 + 16))
+        }
+      });
+      continue;
+    }
+
+    // All other components go to body
+    body.push({ type: component });
+  }
+
+  // Ensure there's at least one Hero (mandatory for rules to work)
+  if (!hasHero) {
+    layout.unshift({
+      type: "Hero",
+      layout: {
+        template: Math.floor(Math.random() * 5),
+        children: [
+          {
+            type: "Text",
+            props: {
+              text: getRandomTitle(),
+              size: "text-4xl",
+              align: "center"
+            }
+          },
+          {
+            type: "Text",
+            props: {
+              text: getRandomSubtitle(),
+              size: "text-lg",
+              color: "text-secondary"
+            }
+          },
+          { type: "Avatar" }
+        ]
+      }
+    });
+  }
+
+  // Append the remaining body
+  layout.push(...body);
+
+  // Always end with a footer
+  layout.push({ type: "Footer" });
+
+  return layout;
+}
+
+
+function getRandomTitle() {
+  const titles = [
+    "Welcome to the Jungle",
+    "Your Digital Playground",
+    "Creative Sparks Fly Here",
+    "Design Meets Code",
+    "Crafted with Passion"
+  ];
+  return titles[Math.floor(Math.random() * titles.length)];
+}
+
+function getRandomSubtitle() {
+  const subtitles = [
+    "Where creativity meets chaos.",
+    "Start your journey today.",
+    "Built for impact.",
+    "Turn your ideas into reality.",
+    "See what’s possible."
+  ];
+  return subtitles[Math.floor(Math.random() * subtitles.length)];
+}
