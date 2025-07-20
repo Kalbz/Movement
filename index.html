@@ -1,19 +1,31 @@
+
+
 <!doctype html>
 <html lang="en" data-theme="cupcake">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./public/icons/portfolioicon.png" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml," />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
   <body id="navbar">
     <div id="app"></div>
 
-    <!-- <h1>testing</h1>
+    <svg id="logoPreview" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="96" height="96">
+    </svg>
 
-    <button class="btn btn-primary">Button</button>
-    <button class="btn btn-secondary">Button</button>
-    <button class="btn btn-accent">Button</button> -->
+
+    <style>
+      #logoPreview {
+        display: none;
+      }
+    </style>
+
+    <script src="/scripts/createPortfolioLogo.js"></script>
     <script type="module" src="/src/main.js"></script>
+
   </body>
 </html>
+
+
+

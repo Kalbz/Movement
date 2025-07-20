@@ -65,7 +65,7 @@ export function generateRandomLayout() {
   ];
 
   // Randomly decide if we want a Navbar
-  const includeNavbar = Math.random() < 0.7;
+  const includeNavbar = Math.random() < 0.7; // 70% chance
   if (includeNavbar) {
     layout.push({ type: "Navbar" });
   }
