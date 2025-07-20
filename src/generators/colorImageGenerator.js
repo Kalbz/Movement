@@ -9,7 +9,6 @@ export function getColorFromTheme(themeName) {
   const [ , , , primary, secondary ] = colors;
   const picked = Math.random() < 0.5 ? primary : secondary;
 
-  console.log(`🎨 Theme: ${themeName} → Using color: ${picked}`);
   return picked;
 }
 

@@ -38,7 +38,6 @@ function generateFaviconFromSVG() {
   const serializer = new XMLSerializer();
   const svgString = serializer.serializeToString(svgEl);
 
-  console.log("Serialized SVG:", svgString);
 
   const encoded = encodeURIComponent(svgString)
     .replace(/'/g, "%27")
@@ -54,8 +53,6 @@ function generateFaviconFromSVG() {
   }
   link.href = dataUrl;
 
-  console.log("Favicon set to:", dataUrl);
-  console.log("Child elements in logoPreview:", svgEl.children.length);
 
 }
 

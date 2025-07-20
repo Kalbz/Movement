@@ -11,7 +11,7 @@ export function createSpacer({
   const growClass = grow ? "flex-grow" : "";
 
   const className = `${widthClass} ${heightClass} ${background} ${growClass}`;
-  console.log("Spacer className:", className);
+
 
   spacer.className = className;
   return spacer;

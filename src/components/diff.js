@@ -2,12 +2,25 @@ import { fetchThemedImage } from '../generators/colorImageGenerator.js';
 
 export async function createDiff(theme = "light") {
   const diff = document.createElement('figure');
-  diff.className = 'diff aspect-16/9 w-full mb-6';
+
+  // Pick a random width from predefined options
+  const widthOptions = [40, 50, 60, 70, 80, 90, 100];
+  const widthPercent = widthOptions[Math.floor(Math.random() * widthOptions.length)];
+  diff.style.width = `${widthPercent}vw`;
+
+  // Base classes
+  let classList = ['diff', 'aspect-16/9', 'mx-auto', 'mb-6'];
+
+  // 50% chance of adding rounded corners
+  if (Math.random() < 0.5) {
+    classList.push('rounded-xl', 'overflow-hidden'); // smooth clipping
+  }
+
+  diff.className = classList.join(' ');
 
   const useImages = Math.random() < 0.5;
 
   if (useImages) {
-    // Fetch two themed images (different ones)
     const [image1, image2] = await Promise.all([
       fetchThemedImage(theme, "abstract"),
       fetchThemedImage(theme, "abstract")
@@ -26,7 +39,6 @@ export async function createDiff(theme = "light") {
       <div class="diff-resizer"></div>
     `;
   } else {
-    // Use the text version
     diff.innerHTML = `
       <div class="diff-item-1" role="img" tabindex="0">
         <div class="bg-primary text-primary-content grid place-content-center text-9xl font-black">
