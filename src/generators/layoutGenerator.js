@@ -131,14 +131,17 @@ export function generateRandomLayout() {
       if (includeAvatar) {
         children.push({ type: "Avatar" });
       }
+const useAbsoluteHero = Math.random() < 0.9; // 30% chance
 
-      layout.push({
-        type: "Hero",
-        layout: {
-          template: Math.floor(Math.random() * 5),
-          children
-        }
-      });
+layout.push({
+  type: "Hero",
+  layout: {
+    template: useAbsoluteHero
+      ? 100 + Math.floor(Math.random() * 5)  // 5 templates
+      : Math.floor(Math.random() * 6),
+    children
+  }
+});
       continue;
     }
 

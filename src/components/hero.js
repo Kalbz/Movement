@@ -1,34 +1,32 @@
 import { randomImage } from '../generators/randomImageGenerator.js';
 
-export function createHero({ children = [], layout = {}, template = null, textChildren = [] } = {}) {
+import { createAbsoluteHero } from './hero2.js';
 
+export function createHero({ children = [], layout = {}, template = null, textChildren = [] } = {}) {
   const hero = document.createElement('div');
   hero.className = 'hero min-h-screen rounded-box mb-6 relative flex items-center justify-center';
 
-  // If template is specified, use template mode with dynamic content
   if (template !== null) {
-    return createTemplateHero(hero, template, children, textChildren);
+    if (template >= 100) {
+      return createAbsoluteHero({ children, template: template - 100 });
+    }
 
+    return createTemplateHero(hero, template, children, textChildren);
   }
 
-  // If no children provided, use the original random templates
+  // fallback for manually positioned layout-based hero
   if (!children || children.length === 0) {
     return createRandomHeroTemplate(hero);
   }
 
-  // Create hero content container for custom children
   const heroContent = document.createElement('div');
-  
-  // Apply layout options
   const flexDirection = layout.direction || 'flex-col';
   const alignItems = layout.align || 'items-center';
   const justifyContent = layout.justify || 'justify-center';
-  const gap = layout.gap || 'gap-8'; // Add gap support
-  
-  // Build className with custom centering instead of hero-content
+  const gap = layout.gap || 'gap-8';
+
   heroContent.className = `flex ${flexDirection} ${alignItems} ${justifyContent} ${gap} w-full h-full`;
 
-  // Add children to hero content
   children.forEach(child => {
     if (child && typeof child === 'object') {
       heroContent.appendChild(child);
@@ -38,6 +36,7 @@ export function createHero({ children = [], layout = {}, template = null, textCh
   hero.appendChild(heroContent);
   return hero;
 }
+
 
 // Template mode: Use existing templates but replace content dynamically
 function createTemplateHero(hero, templateIndex, children, textChildren = []) {
