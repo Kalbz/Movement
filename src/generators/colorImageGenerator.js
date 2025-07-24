@@ -33,7 +33,7 @@ export async function fetchThemedImage(themeName, query = "abstract") {
 
   if (photos.length > 0) {
     const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
-    return randomPhoto?.src?.large || null;
+    return randomPhoto?.src?.original || null; // ← Use 'original' instead of 'large'
   }
   return null;
 }

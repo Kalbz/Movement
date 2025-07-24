@@ -40,11 +40,11 @@
 // }
 
 // Old^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 import trianglify from "trianglify";
 import themeColors from "../components/themeColors.js";
+import { fetchThemedImage, getColorFromTheme } from "./colorImageGenerator.js"; // adjust path if needed
 
-export function randomBackground(selector = "body") {
+export async function randomBackground(selector = "body") {
   const theme = document.documentElement.getAttribute("data-theme") || "light";
   const palette = themeColors[theme] || [
     "#ffffff",
@@ -54,14 +54,15 @@ export function randomBackground(selector = "body") {
     "#9333ea",
   ];
 
-  const mode = ["trianglify", "gradient", "plain"][Math.floor(Math.random() * 3)];
   const target = document.querySelector(selector);
   if (!target) return;
 
-  // Clean up old background
+  // Clean up any existing canvas or background
   document.querySelectorAll("canvas.trianglify-bg").forEach(el => el.remove());
   target.style.backgroundImage = "";
   target.style.background = "";
+
+  const mode = ["trianglify", "gradient", "plain", "image"][Math.floor(Math.random() * 4)];
 
   if (mode === "trianglify") {
     const pattern = trianglify({
@@ -89,14 +90,29 @@ export function randomBackground(selector = "body") {
     target.style.backgroundRepeat = "repeat-x";
 
   } else if (mode === "gradient") {
-    const count = Math.floor(Math.random() * 4) + 2; // 2 to 5 colors
+    const count = Math.floor(Math.random() * 4) + 2; // 2–5 colors
     const colors = shuffleArray(palette).slice(0, count);
     const angle = Math.floor(Math.random() * 360);
     target.style.backgroundImage = `linear-gradient(${angle}deg, ${colors.join(", ")})`;
 
   } else if (mode === "plain") {
-    const color = palette[Math.random() < 0.5 ? 3 : 4]; // index 3 or 4
+    const color = palette[Math.random() < 0.5 ? 3 : 4];
     target.style.background = color;
+
+  } else if (mode === "image") {
+    const imageUrl = await fetchThemedImage(theme, "abstract");
+    if (imageUrl) {
+target.style.backgroundImage = `url("${imageUrl}")`;
+target.style.backgroundRepeat = "no-repeat";
+target.style.backgroundSize = "cover";
+target.style.backgroundPosition = "center";
+target.style.imageRendering = "auto"; // ← Let the browser optimize
+
+    } else {
+      // fallback to plain color
+      const fallback = getColorFromTheme(theme);
+      target.style.background = fallback;
+    }
   }
 }
 
