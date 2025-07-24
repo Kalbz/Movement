@@ -1,4 +1,4 @@
-export function wrapWithLayout(component, { align = "center", padding = "py-4", maxWidth = "max-w-3xl", background = "" } = {}) {
+export function wrapWithLayout(component, { align = "center", padding = "py-4", maxWidth = "w-full", background = "" } = {}) {
   const wrapper = document.createElement("div");
 
   const alignClass = {

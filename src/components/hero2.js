@@ -5,10 +5,10 @@ export function createAbsoluteHero({ children = [], template = 0 }) {
   const templateData = layoutTemplates[template % layoutTemplates.length];
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'w-full min-h-screen bg-base-200 overflow-hidden flex justify-center items-center';
+  wrapper.className = 'w-full min-h-screen overflow-hidden flex justify-center items-center';
 
   const layoutBox = document.createElement('div');
-  layoutBox.className = 'relative w-[90vw] h-[90vh] rounded-box';
+  layoutBox.className = 'relative w-[100vw] h-[90vh] rounded-box';
   layoutBox.style.maxWidth = '1200px';
 
   templateData.blocks.forEach((block, index) => {
