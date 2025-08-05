@@ -42,11 +42,11 @@ export async function createDiff(theme = "light") {
     diff.innerHTML = `
       <div class="diff-item-1" role="img" tabindex="0">
         <div class="bg-primary text-primary-content grid place-content-center text-9xl font-black">
-          DAISY
+          KALLE
         </div>
       </div>
       <div class="diff-item-2" role="img">
-        <div class="bg-base-200 grid place-content-center text-9xl font-black">DAISY</div>
+        <div class="bg-base-200 grid place-content-center text-9xl font-black">KALLE</div>
       </div>
       <div class="diff-resizer"></div>
     `;

@@ -3,7 +3,7 @@ export function createNavbar() {
     navbar.className = "navbar bg-base-100 w-full shadow-sm";
 
     navbar.innerHTML = `
-    <a class="btn btn-ghost text-xl">daisyUI</a>
+    <a class="btn btn-ghost text-xl">KALLE</a>
     `;
 
     return navbar;
