@@ -1,0 +1,50 @@
+<!-- 
+<div class="min-h-screen p-8 flex flex-col gap-8 items-center justify-start max-w-4xl mx-auto">
+
+  <div class="flex items-center gap-4">
+    <img src="/public/icons/portfolioicon_with_ids.svg" class="w-16" alt="Logo" />
+    <h1 class="text-4xl font-bold">Your Admin Dashboard</h1>
+  </div>
+
+
+  <div class="w-full">
+    <label class="label">
+      <span class="label-text font-semibold">Your Bio</span>
+    </label>
+    <textarea id="bioInput" class="textarea textarea-bordered w-full" placeholder="Tell the world about yourself..."></textarea>
+  </div>
+
+
+  <div class="w-full">
+    <label class="label">
+      <span class="label-text font-semibold">Profile Picture</span>
+    </label>
+    <input id="profileImageInput" type="file" class="file-input file-input-bordered w-full max-w-xs" accept="image/*" />
+  </div>
+
+
+  <div class="w-full">
+    <label class="label">
+      <span class="label-text font-semibold">Projects</span>
+    </label>
+    <div id="projectsContainer" class="flex flex-col gap-4"></div>
+    <button id="addProjectBtn" class="btn btn-outline btn-primary mt-4">+ Add Project</button>
+  </div>
+
+
+  <div class="flex flex-col md:flex-row gap-4 mt-8">
+    <button id="previewBtn" class="btn btn-info">Preview Site</button>
+    <button id="publishBtn" class="btn btn-success">Publish</button>
+  </div>
+</div>
+
+<template id="projectTemplate">
+  <div class="card bg-base-100 shadow-md p-4">
+    <div class="flex flex-col gap-2">
+      <input type="text" placeholder="Project Title" class="input input-bordered w-full" />
+      <textarea placeholder="Project Description" class="textarea textarea-bordered w-full"></textarea>
+      <input type="file" class="file-input file-input-bordered w-full max-w-xs" accept="image/*" />
+    </div>
+  </div>
+</template>
+
