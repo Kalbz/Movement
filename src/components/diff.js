@@ -30,7 +30,7 @@ export async function createDiff(theme = "light") {
     const fallback2 = "https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp";
 
     diff.innerHTML = `
-      <div class="diff-item-1" role="img" tabindex="0">
+      <div class="diff-item-1 p-4" role="img" tabindex="0">
         <img alt="themed image 1" src="${image1 || fallback1}" />
       </div>
       <div class="diff-item-2" role="img">
@@ -40,7 +40,7 @@ export async function createDiff(theme = "light") {
     `;
   } else {
     diff.innerHTML = `
-      <div class="diff-item-1" role="img" tabindex="0">
+      <div class="diff-item-1 p-4" role="img" tabindex="0">
         <div class="bg-primary text-primary-content grid place-content-center text-9xl font-black">
           KALLE
         </div>

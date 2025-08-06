@@ -3,7 +3,7 @@ import { fetchThemedImage } from '../generators/colorImageGenerator.js';
 export async function createImage({
   theme = "light",
   alt = "Themed image",
-  className = "w-full max-w-2xl rounded-lg shadow-xl"
+  className = "w-full max-w-2xl p-4 rounded-lg shadow-xl"
 } = {}) {
   const stockUrl = await fetchThemedImage(theme);
   const fallbackUrl = "https://source.unsplash.com/random/600x400";
