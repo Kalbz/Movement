@@ -106,19 +106,49 @@ export async function createComponentFromName(type, layout = {}, props = {}, the
 
 
 
+// export async function renderRandomLayout(themeName = "light") {
+//   const app = document.getElementById("app");
+//   app.innerHTML = "";
+
+//   const layout = await generateRandomLayout(themeName);
+
+//   for (const section of layout) {
+//     let component;
+
+//     if (typeof section === "string") {
+//       component = await createComponentFromName(section, {}, {}, themeName);
+//     } else if (section.type) {
+//       component = await createComponentFromName(section.type, section.layout, section.props, themeName);
+//     }
+
+//     if (component) {
+//       const wrapped = section.layout ? wrapWithLayout(component, section.layout) : component;
+//       app.appendChild(wrapped);
+//     }
+//   }
+// }
+
 export async function renderRandomLayout(themeName = "light") {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
   const layout = await generateRandomLayout(themeName);
 
-  for (const section of layout) {
+  // Shuffle everything except Navbar and Footer
+  const randomized = randomizeOrder(layout, "shuffle");
+
+  for (const section of randomized) {
     let component;
 
     if (typeof section === "string") {
       component = await createComponentFromName(section, {}, {}, themeName);
     } else if (section.type) {
-      component = await createComponentFromName(section.type, section.layout, section.props, themeName);
+      component = await createComponentFromName(
+        section.type,
+        section.layout,
+        section.props,
+        themeName
+      );
     }
 
     if (component) {
@@ -126,4 +156,35 @@ export async function renderRandomLayout(themeName = "light") {
       app.appendChild(wrapped);
     }
   }
+}
+
+
+// --- helpers ---
+function isType(entry, name) {
+  if (typeof entry === "string") return entry === name;
+  return entry && typeof entry === "object" && entry.type === name;
+}
+
+function shuffleInPlace(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// If you prefer a *cyclic shift* instead of full shuffle, flip mode to "shift".
+function randomizeOrder(layout, mode = "shuffle") {
+  const headers = layout.filter(e => isType(e, "Navbar"));
+  const footers = layout.filter(e => isType(e, "Footer"));
+  const middle  = layout.filter(e => !isType(e, "Navbar") && !isType(e, "Footer"));
+
+  if (mode === "shift" && middle.length > 1) {
+    const k = Math.floor(Math.random() * middle.length); // 0..len-1
+    const shifted = middle.slice(k).concat(middle.slice(0, k));
+    return [...headers, ...shifted, ...footers];
+  }
+
+  // default: full shuffle of the middle
+  return [...headers, ...shuffleInPlace(middle), ...footers];
 }
