@@ -5,7 +5,26 @@ import { generateTreemapLayoutTemplate } from '../layouts/treeTemplate.js';
 import { generateRandomLayoutTemplate as generateGridLayout } from '../layouts/treebugTemplate.js';
 
 // --- Layout Selector ---
+const FORCE_TEMPLATE = 'premade'; // 'treemap', 'premade', 'masonry', 'grid' or null
+
 function getRandomLayout() {
+  if (FORCE_TEMPLATE === 'treemap') {
+    const numBlocks = Math.floor(Math.random() * 8) + 8;
+    return generateTreemapLayoutTemplate(numBlocks);
+  } else if (FORCE_TEMPLATE === 'premade') {
+    const template = premadeTemplates[Math.floor(Math.random() * premadeTemplates.length)];
+    return {
+      name: template.name,
+      blocks: template.blocks
+    };
+  } else if (FORCE_TEMPLATE === 'masonry') {
+    const columns = Math.floor(Math.random() * 3) + 3;
+    return generateMasonryLayoutTemplate({ numBlocks: 15, columns });
+  } else if (FORCE_TEMPLATE === 'grid') {
+    return generateGridLayout();
+  }
+
+  // Default behavior
   const rand = Math.random();
 
   if (rand < 0.5) {
@@ -25,22 +44,17 @@ function getRandomLayout() {
   }
 }
 
-// --- Main Hero ---
-export function createAbsoluteHero() {
+
+
+export function createAbsoluteHero({ children = [], template = 0 } = {}) {
   const templateData = getRandomLayout();
   let blocks = templateData.blocks;
 
+  // Optional: add spacing between blocks
   blocks = maybeApplyGapsToBlocks(blocks);
 
   console.log("🧩 Layout:", templateData.name);
   console.log("📦 Blocks:", blocks.length);
-
-  const children = Array.from({ length: blocks.length }, (_, i) => {
-    const el = document.createElement('div');
-    el.innerHTML = `<div class="text-sky-400 font-bold">Block ${i + 1}</div>`;
-    el.className = 'text-center text-lg';
-    return el;
-  });
 
   const wrapper = document.createElement('div');
   wrapper.className = 'w-full min-h-screen overflow-hidden flex justify-center items-center';
@@ -49,7 +63,7 @@ export function createAbsoluteHero() {
   layoutBox.className = 'relative w-[100vw] rounded-box';
   layoutBox.style.maxWidth = '1200px';
 
-  // Set height
+  // Optional layout height
   if (templateData.maxHeight) {
     const pxHeight = (templateData.maxHeight / 100) * window.innerHeight;
     layoutBox.style.height = `${pxHeight}px`;
@@ -57,16 +71,16 @@ export function createAbsoluteHero() {
     layoutBox.style.height = '90vh';
   }
 
-  // Optional dev grid
+  // Optional dev grid (comment out if not needed)
   layoutBox.style.backgroundImage = `
     linear-gradient(to right, rgba(0,0,255,0.05) 1px, transparent 1px)
   `;
-  layoutBox.style.backgroundSize = `${100 / 4}% 100%`; // devgrid based on 4-cols by default
+  layoutBox.style.backgroundSize = `${100 / 4}% 100%`; // 4 columns by default
 
   // Render blocks
   blocks.forEach((block, index) => {
     const blockEl = document.createElement('div');
-    blockEl.className = 'absolute p-4 bg-base-100 shadow-xl border rounded-lg overflow-auto';
+    blockEl.className = 'absolute p-4 bg-primary shadow-xl border rounded-lg overflow-auto';
     blockEl.style = `
       top: ${block.top};
       left: ${block.left};
@@ -77,7 +91,21 @@ export function createAbsoluteHero() {
     `;
 
     blockEl.title = `Block ${index + 1}`;
-    blockEl.appendChild(children[index]);
+
+    if (children[index]) {
+      blockEl.appendChild(children[index]);
+    } else {
+blockEl.innerHTML = `
+  <div
+    contenteditable="true"
+    class="flex justify-center items-center h-full text-center text-xl text-base-content focus:outline-none"
+    style="opacity: 0.8;"
+  >
+    Block ${index + 1}
+  </div>`;
+
+    }
+
     layoutBox.appendChild(blockEl);
   });
 
@@ -86,8 +114,9 @@ export function createAbsoluteHero() {
 }
 
 
+// Optional helper to add gaps between blocks
 function maybeApplyGapsToBlocks(blocks, gapPercent = 1.5) {
-  if (Math.random() >= 0.6) return blocks; // 40% chance to skip adding gaps
+  if (Math.random() >= 0.6) return blocks; // 40% chance to apply gaps
 
   return blocks.map(block => {
     const gapW = gapPercent;

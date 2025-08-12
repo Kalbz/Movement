@@ -12,3 +12,7 @@ export function randomTheme(){
     themeChange();
 
 }
+
+export function getCurrentTheme() {
+  return localStorage.getItem('theme') || document.documentElement.getAttribute('data-theme') || 'light';
+}
