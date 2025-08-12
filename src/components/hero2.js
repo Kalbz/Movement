@@ -5,7 +5,26 @@ import { generateTreemapLayoutTemplate } from '../layouts/treeTemplate.js';
 import { generateRandomLayoutTemplate as generateGridLayout } from '../layouts/treebugTemplate.js';
 
 // --- Layout Selector ---
+const FORCE_TEMPLATE = 'premade'; // 'treemap', 'premade', 'masonry', 'grid' or null
+
 function getRandomLayout() {
+  if (FORCE_TEMPLATE === 'treemap') {
+    const numBlocks = Math.floor(Math.random() * 8) + 8;
+    return generateTreemapLayoutTemplate(numBlocks);
+  } else if (FORCE_TEMPLATE === 'premade') {
+    const template = premadeTemplates[Math.floor(Math.random() * premadeTemplates.length)];
+    return {
+      name: template.name,
+      blocks: template.blocks
+    };
+  } else if (FORCE_TEMPLATE === 'masonry') {
+    const columns = Math.floor(Math.random() * 3) + 3;
+    return generateMasonryLayoutTemplate({ numBlocks: 15, columns });
+  } else if (FORCE_TEMPLATE === 'grid') {
+    return generateGridLayout();
+  }
+
+  // Default behavior
   const rand = Math.random();
 
   if (rand < 0.5) {
@@ -24,6 +43,7 @@ function getRandomLayout() {
     return generateGridLayout();
   }
 }
+
 
 
 export function createAbsoluteHero({ children = [], template = 0 } = {}) {
