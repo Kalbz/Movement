@@ -15,6 +15,7 @@ import { createText } from "../components/text.js";
 import { createLongText } from "../components/longText.js";
 import { createSpacer } from "../components/spacer.js";
 import { createImage } from "../components/image.js";
+import { createSplit } from "../components/split.js";
 import { generateRandomLayout } from "../generators/layoutGenerator.js"; // wherever you put it
 export async function createComponentFromName(type, layout = {}, props = {}, theme = "light") {
   switch (type) {
@@ -45,6 +46,23 @@ export async function createComponentFromName(type, layout = {}, props = {}, the
       }
 
       return createHero(); // fallback
+    }
+
+     case "Split": {
+      const childSpecs = layout.children || props.children || [];
+      const domChildren = await Promise.all(
+        childSpecs.map(spec =>
+          spec?.type
+            ? createComponentFromName(spec.type, spec.layout || {}, spec.props || {}, theme)
+            : null
+        )
+      );
+      return createSplit({
+        children: domChildren.filter(Boolean).slice(0, 2), // left, right
+        ratio: props.ratio || "1:1",
+        reverse: !!props.reverse,
+        gap: props.gap || "gap-8",
+      });
     }
 
     case "Carousel":
@@ -129,8 +147,10 @@ export async function createComponentFromName(type, layout = {}, props = {}, the
 // }
 
 export async function renderRandomLayout(themeName = "light") {
-  const app = document.getElementById("app");
-  app.innerHTML = "";
+const app = document.getElementById("app");
+app.innerHTML = "";
+app.classList.add("flex", "flex-col", "items-center", "text-center", "gap-8");
+
 
   const layout = await generateRandomLayout(themeName);
 
