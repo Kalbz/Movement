@@ -16,6 +16,7 @@ import { createLongText } from "../components/longText.js";
 import { createSpacer } from "../components/spacer.js";
 import { createImage } from "../components/image.js";
 import { createSplit } from "../components/split.js";
+import { createHeroSection, createAboutSection, createContactSection, createProjectsSection, DEFAULT_PROJECTS } from "../generators/sections-from-react.js";
 import { generateRandomLayout } from "../generators/layoutGenerator.js"; // wherever you put it
 export async function createComponentFromName(type, layout = {}, props = {}, theme = "light") {
   switch (type) {
@@ -64,6 +65,44 @@ export async function createComponentFromName(type, layout = {}, props = {}, the
         gap: props.gap || "gap-8",
       });
     }
+
+    case "HeroSection": {
+  // You can pass layout.template -> "center"|"split"|"left"
+  const variant =
+    layout?.template === "center" || layout?.template === "split" || layout?.template === "left"
+      ? layout.template
+      : "split"; // default like your screenshot
+
+  return createHeroSection({
+    variant,
+    name: props?.name || "Your Name",
+    role: props?.role || "Creative Engineer",
+    headline: props?.headline,   // optional explicit headline
+    withBlobs: props?.withBlobs ?? true,
+    seed: props?.seed            // optional for reproducibility
+  });
+}
+
+case "AboutSection": {
+  // layout.style -> "simple"|"columns"|"cards"
+  const style = layout?.style || "columns";
+  return createAboutSection({ style, withBlob: props?.withBlob ?? true, seed: props?.seed });
+}
+case "ProjectsSection": {
+  // layout.layout -> "grid" | "masonry" | "spotlight" (optional)
+  // props.projects -> custom data array (optional)
+  // props.withHeader -> boolean (default true)
+  // props.seed -> to make layout/flair reproducible
+  return createProjectsSection({
+    layout: layout?.layout,                  // optional layout mode
+    projects: props?.projects || DEFAULT_PROJECTS,
+    withHeader: props?.withHeader ?? true,
+    seed: props?.seed,
+  });
+}
+
+case "ContactSection":
+  return createContactSection();
 
     case "Carousel":
       return createCarousel();

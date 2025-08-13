@@ -92,6 +92,30 @@ export function generateRandomLayout() {
     });
   }
 
+  
+  // ✅ Append your new section logic here
+  // body.push({
+  //   type: "HeroSection",
+  //   layout: { template: Math.random() < 0.5 ? "split" : (Math.random() < 0.5 ? "center" : "left") },
+  //   props: { name: "Your Name", role: "Creative Engineer" }
+  // });
+
+  // if (appear(COMPONENT_SCALES.AboutSection.appearanceScale)) {
+  //   body.push({ type: "AboutSection", layout: { style: "columns" } });
+  // }
+
+  // if (appear(COMPONENT_SCALES.ContactSection.appearanceScale)) {
+  //   body.push({ type: "ContactSection" });
+  // }
+
+//   body.push({
+//   type: "ProjectsSection",
+//   // Optional: force a specific layout 33% of the time, otherwise let it randomize inside createProjectsSection
+//   layout: { layout: Math.random() < 0.33 ? (Math.random() < 0.5 ? "grid" : "masonry") : undefined },
+//   // Optional: pass custom data instead of DEFAULT_PROJECTS
+//   // props: { projects: CUSTOM_PROJECTS }
+// });
+
   // --- Poisson-ish multiplicities via biased sampler ---
   const TYPES = Object.keys(COMPONENT_SCALES).filter(t => t !== "Hero");
 
@@ -175,13 +199,19 @@ const COMPONENT_SCALES = {
   Carousel:    { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
   Boxes:       { appearanceScale: 5,  quantityScale: 2, min: 0, max: 2 },
   Card:        { appearanceScale: 6,  quantityScale: 4, min: 0, max: 8 },
-  Accordion:   { appearanceScale: 3,  quantityScale: 1, min: 0, max: 2 },
+  Accordion:   { appearanceScale: 0,  quantityScale: 1, min: 0, max: 2 },
   Table:       { appearanceScale: 2,  quantityScale: 1, min: 0, max: 1 },
   Comparison:  { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
   Divider:     { appearanceScale: 5,  quantityScale: 2, min: 0, max: 3 },
   Spacer:      { appearanceScale: 6,  quantityScale: 3, min: 0, max: 4 },
   LongText:    { appearanceScale: 3,  quantityScale: 1, min: 0, max: 2 },
   Text:        { appearanceScale: 6,  quantityScale: 2, min: 0, max: 5 },
+  HeroSection:   { appearanceScale: 9, quantityScale: 1, min: 1, max: 1 },
+AboutSection:  { appearanceScale: 6, quantityScale: 1, min: 1, max: 1 },
+ContactSection:{ appearanceScale: 6, quantityScale: 1, min: 1, max: 1 },
+ProjectsSection: { appearanceScale: 8, quantityScale: 1, min: 1, max: 1 },
+
+
   Split: { appearanceScale: 6, quantityScale: 2, min: 0, max: 3 },
 
   // Avatar intentionally omitted (only lives inside Hero)
