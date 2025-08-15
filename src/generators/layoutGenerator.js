@@ -194,25 +194,23 @@ export function generateRandomLayout() {
 // appearanceScale: chance to appear at all
 // quantityScale: bias for how many to place if it appears
 const COMPONENT_SCALES = {
-  Hero:        { appearanceScale: 9,  quantityScale: 1, min: 1, max: 1 },
-  Image:       { appearanceScale: 7,  quantityScale: 8, min: 0, max: 6 },
-  Carousel:    { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
-  Boxes:       { appearanceScale: 5,  quantityScale: 2, min: 0, max: 2 },
-  Card:        { appearanceScale: 6,  quantityScale: 4, min: 0, max: 8 },
-  Accordion:   { appearanceScale: 0,  quantityScale: 1, min: 0, max: 2 },
-  Table:       { appearanceScale: 2,  quantityScale: 1, min: 0, max: 1 },
-  Comparison:  { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
-  Divider:     { appearanceScale: 5,  quantityScale: 2, min: 0, max: 3 },
-  Spacer:      { appearanceScale: 6,  quantityScale: 3, min: 0, max: 4 },
-  LongText:    { appearanceScale: 3,  quantityScale: 1, min: 0, max: 2 },
-  Text:        { appearanceScale: 6,  quantityScale: 2, min: 0, max: 5 },
-  HeroSection:   { appearanceScale: 9, quantityScale: 1, min: 1, max: 1 },
-AboutSection:  { appearanceScale: 6, quantityScale: 1, min: 1, max: 1 },
-ContactSection:{ appearanceScale: 6, quantityScale: 1, min: 1, max: 1 },
-ProjectsSection: { appearanceScale: 8, quantityScale: 1, min: 1, max: 1 },
-
-
-  Split: { appearanceScale: 6, quantityScale: 2, min: 0, max: 3 },
+Hero:            { appearanceScale: 9,  quantityScale: 1, min: 1, max: 1 },
+Image:           { appearanceScale: 7,  quantityScale: 8, min: 0, max: 6 },
+Carousel:        { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
+Boxes:           { appearanceScale: 5,  quantityScale: 2, min: 0, max: 2 },
+Card:            { appearanceScale: 6,  quantityScale: 4, min: 0, max: 8 },
+Accordion:       { appearanceScale: 0,  quantityScale: 0, min: 0, max: 0 },
+Table:           { appearanceScale: 0,  quantityScale: 0, min: 0, max: 0 },
+Comparison:      { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
+Divider:         { appearanceScale: 5,  quantityScale: 2, min: 0, max: 3 },
+Spacer:          { appearanceScale: 6,  quantityScale: 3, min: 0, max: 4 },
+LongText:        { appearanceScale: 3,  quantityScale: 1, min: 0, max: 2 },
+Text:            { appearanceScale: 6,  quantityScale: 2, min: 0, max: 5 },
+HeroSection:     { appearanceScale: 9,  quantityScale: 1, min: 1, max: 1 },
+AboutSection:    { appearanceScale: 6,  quantityScale: 1, min: 1, max: 1 },
+ContactSection:  { appearanceScale: 6,  quantityScale: 1, min: 1, max: 1 },
+ProjectsSection: { appearanceScale: 8,  quantityScale: 1, min: 1, max: 1 },
+Split:           { appearanceScale: 6,  quantityScale: 2, min: 0, max: 3 },
 
   // Avatar intentionally omitted (only lives inside Hero)
 };
@@ -264,22 +262,20 @@ function clampBody(items) {
 
 function getRandomTitle() {
   const titles = [
-    "Welcome to the Jungle",
-    "Your Digital Playground",
-    "Creative Sparks Fly Here",
+    "Lets get ready to Random!",
+    "My Digital Playground",
+    "Creative Genius in the making",
     "Design Meets Code",
-    "Crafted with Passion"
+    "Crafted with Precision, or Randomness, can't even tell"
   ];
   return titles[Math.floor(Math.random() * titles.length)];
 }
 
 function getRandomSubtitle() {
   const subtitles = [
-    "Where creativity meets chaos.",
-    "Start your journey today.",
-    "Built for impact.",
-    "Turn your ideas into reality.",
-    "See what’s possible."
+    "Where creativity met chaos.",
+    "Follow my journey today",
+    "Turn my idea to sort of reality.",
   ];
   return subtitles[Math.floor(Math.random() * subtitles.length)];
 }

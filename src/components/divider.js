@@ -1,24 +1,16 @@
+import { getColorFromTheme } from "../generators/colorImageGenerator";
+import { getCurrentTheme } from "../generators/colorImageGenerator";
+
+
 export function createDivider(left, right, options = {}) {
   const wrapper = document.createElement("div");
 
   const isVertical = options.vertical ?? false;
   const dividerText = options.text ?? "";
   const alignment = options.alignment ?? "center";
+  const themeName = options.themeName || getCurrentTheme();
 
-  const colorOptions = [
-    "", // default
-    "divider-neutral",
-    "divider-primary",
-    "divider-secondary",
-    "divider-accent",
-    "divider-success",
-    "divider-warning",
-    "divider-info",
-    "divider-error",
-  ];
-
-  const randomColor =
-    colorOptions[Math.floor(Math.random() * colorOptions.length)];
+  const themeColor = getColorFromTheme(themeName);
 
   wrapper.className = isVertical
     ? "flex w-full items-center justify-center gap-4 my-6"
@@ -29,16 +21,21 @@ export function createDivider(left, right, options = {}) {
     "divider",
     isVertical ? "divider-horizontal" : "",
     alignment !== "center" ? `divider-${alignment}` : "",
-    randomColor,
   ]
     .join(" ")
     .trim();
 
   divider.textContent = dividerText;
 
+  divider.style.setProperty("--tw-border-opacity", "1");
+  divider.style.borderColor = themeColor;
+  divider.style.color = themeColor;
+
   wrapper.appendChild(left);
   wrapper.appendChild(divider);
   wrapper.appendChild(right);
+
+  console.log("Dividererrrrrrrrr");
 
   return wrapper;
 }

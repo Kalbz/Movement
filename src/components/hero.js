@@ -1,4 +1,5 @@
 import { randomImage } from '../generators/randomImageGenerator.js';
+import { createImage } from './image.js';
 
 import { createAbsoluteHero } from './hero2.js';
 

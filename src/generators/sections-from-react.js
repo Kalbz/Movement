@@ -215,7 +215,7 @@ export function createContactSection() {
     <h2 class="text-2xl sm:text-3xl font-extrabold">Contact</h2>
     <p class="opacity-80 mt-2">Open to collaborations, experiments, and good ideas.</p>
     <div class="mt-4 join">
-      <a class="btn btn-primary join-item" href="mailto:you@example.com">Email</a>
+      <a class="btn join-item" href="https://www.youtube.com/@KalleEngblom" target="_blank" rel="noopener noreferrer">Youtube</a>
       <a class="btn join-item" href="https://github.com/Kalbz" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a class="btn join-item" href="https://www.linkedin.com/in/kalle-engblom-764555240/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>`;
