@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "build-theme-map": "node scripts/buildThemeMap.js"
+    "build-theme-map": "node scripts/buildThemeMap.js",
+    "deploy": "npm run build && rimraf docs && mkdir docs && xcopy dist docs /E /I && git add docs && git commit -m \"Deploy build\" && git push"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",
+    "rimraf": "^6.0.1",
     "tailwindcss": "^4.1.11",
     "vite": "^7.0.0"
   },
