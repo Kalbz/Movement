@@ -7,6 +7,14 @@
 //  - createContactSection()
 // Optional: pass rng to get deterministic variants (seeded).
 
+import themeBaseColors from "../components/themeColors";
+
+import { getCurrentTheme } from "./colorImageGenerator";
+
+const themeName = getCurrentTheme();
+const colors = themeBaseColors[themeName] || [];
+const [ , , , primary, secondary ] = colors;
+
 // --- tiny util rng (optional) ---
 function mulberry32(a) {
   return function () {
@@ -120,11 +128,17 @@ export function createHeroSection({
     right.appendChild(pane);
     const gridMini = document.createElement("div");
     gridMini.className = "absolute inset-0 grid grid-cols-3 gap-3 p-3";
-    for (let i = 0; i < 9; i++) {
-      const cell = document.createElement("div");
-      cell.className = "rounded-xl bg-base-100/70 shadow";
-      gridMini.appendChild(cell);
-    }
+for (let i = 0; i < 9; i++) {
+  const cell = document.createElement("div");
+  cell.className = "rounded-xl shadow";
+
+  // gradient step (0 → primary, 1 → secondary)
+  const t = i / 8; // 0.0 to 1.0 across 9 cells
+  const color = lerpColor(primary, secondary, t);
+
+  cell.style.background = color;
+  gridMini.appendChild(cell);
+}
     right.appendChild(gridMini);
 
     grid.append(left, right);
@@ -177,7 +191,7 @@ export function createAboutSection({ style = "columns", seed, withBlob = true } 
     grid.className = "mt-4 grid sm:grid-cols-2 gap-6";
     const p1 = document.createElement("p");
     p1.className = "opacity-80";
-    p1.textContent = "I’m fascinated by emergent aesthetics. I design constraints and let algorithms improvise within them — like a jazz rhythm section for UI.";
+    p1.textContent = "I am a 24-year-old Software Engineering student. I love being able to combine creative elements in both my work and hobbies. In my free time I spend loads of time learning and building projects around various technology, digital art, 3D modeling and web development.";
     const p2 = document.createElement("p");
     p2.className = "opacity-80";
     p2.textContent = "Recently I’ve explored SVG geometry, canvas shaders, and procedural layouts that feel deliberate, not chaotic.";
@@ -232,11 +246,44 @@ export function registerSectionsInFactory(createComponentFromName) {
 
 // --- DEFAULT PROJECTS (shared) ---
 export const DEFAULT_PROJECTS = [
-  { title: "Organic Blob Generator", tags: ["SVG", "Procedural", "Art"], desc: "Generates smooth, organic blobs with layered styles and export to SVG.", link: "#" },
-  { title: "Waves & Grids",         tags: ["Canvas", "Animation"],        desc: "Real-time wave field visualizer with a grid distortion pass.",        link: "#" },
-  { title: "Treemap Layout Engine",  tags: ["Algorithms", "UI"],           desc: "Places blocks procedurally to create intentional, balanced layouts.", link: "#" },
-  { title: "Rain FX",                tags: ["FX", "Canvas"],               desc: "Lightweight rain shader effect that adapts to theme and motion.",     link: "#" },
+  { 
+    title: "SVGEN", 
+    tags: ["SVG", "Procedural", "Art"], 
+    desc: "Interactive SVG shape generator for blobs, waves, scatter patterns, and more. Includes random themes, layered styles, and live preview with downloads.", 
+    link: "https://github.com/Kalbz/svgen" 
+  },
+  { 
+    title: "IBeeas",         
+    tags: ["App", "Creative", "Ideas"],        
+    desc: "A bee-themed Flutter app for storing personal ideas and sharing them with others. Built with Firebase for real-time sync and authentication.",        
+    link: "https://github.com/Kalbz/ibeeas" 
+  },
+  { 
+    title: "Soundely",  
+    tags: ["Audio", "Visualizer", "Creative"],           
+    desc: "An experimental p5.js audio visualizer that transforms sound into colorful, abstract shapes. Supports mic input and multiple drawing modes.", 
+    link: "https://github.com/Kalbz/soundely" 
+  },
+  { 
+    title: "Chess-Project",                
+    tags: ["Machine Learning", "Chess", "AI"],               
+    desc: "A machine learning chess engine trained on millions of positions using Random Forest models. Supports training, evaluation, and gameplay.",     
+    link: "https://github.com/Loadeumn/Chess-Project" 
+  },
+  { 
+    title: "Cognitive Behavioral Therapy Game",                
+    tags: ["Game", "Wellness", "Unity"],               
+    desc: "An interactive Unity game promoting mindfulness and positive thinking. Includes mini-games focused on concentration, breathing, and optimism.",     
+    link: "https://github.com/Kalbz/CBT" 
+  },
+  { 
+    title: "Random Portfolio",                
+    tags: ["Web", "Creative", "Procedural"],               
+    desc: "A dynamic portfolio website that procedurally generates layouts, making every visit unique and playful.",     
+    link: "https://github.com/Kalbz/Movement" 
+  },
 ];
+
 
 // small helper
 function pick(rng, arr) { return arr[Math.floor(rng() * arr.length)]; }
@@ -249,6 +296,8 @@ function createProjectCard(project, rng) {
 
   const a = document.createElement("a");
   a.href = project.link || "#";
+  a.target ="_blank";
+  a.rel = "noopener noreferrer";
   a.className = `group block rounded-2xl p-5 bg-base-100 ${cls} hover:-translate-y-0.5 transition-transform`;
 
   const tagsRow = document.createElement("div");
@@ -298,8 +347,7 @@ export function createProjectsSection({
     const head = document.createElement("div");
     head.className = "flex items-baseline justify-between";
     head.innerHTML = `
-      <h2 class="text-2xl sm:text-3xl font-extrabold">Selected Projects</h2>
-      <span class="opacity-60 text-sm">layout: ${layout}</span>`;
+      <h2 class="text-2xl sm:text-3xl font-extrabold">Selected Projects</h2>`;
     section.appendChild(head);
   }
 
@@ -326,7 +374,7 @@ export function createProjectsSection({
     section.appendChild(colWrap);
     return section;
   }
-
+  //update this later 
   // spotlight
   const [first, ...rest] = projects;
   const grid = document.createElement("div");
@@ -344,4 +392,17 @@ export function createProjectsSection({
 
   section.appendChild(grid);
   return section;
+}
+
+
+
+function lerpColor(a, b, t) {
+  const ah = parseInt(a.replace("#", ""), 16),
+        ar = ah >> 16, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
+  const bh = parseInt(b.replace("#", ""), 16),
+        br = bh >> 16, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
+  const rr = Math.round(ar + t * (br - ar));
+  const rg = Math.round(ag + t * (bg - ag));
+  const rb = Math.round(ab + t * (bb - ab));
+  return `rgb(${rr},${rg},${rb})`;
 }

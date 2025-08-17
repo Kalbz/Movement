@@ -1,5 +1,5 @@
 export function createText({ 
-  text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 
+  text = "", 
   size, 
   weight, 
   color, 

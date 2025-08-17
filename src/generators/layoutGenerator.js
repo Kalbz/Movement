@@ -2,8 +2,35 @@ import { createCarousel } from "../components/carousel";
 import { createHero } from "../components/hero";
 import { createAvatar } from "../components/avatar";
 import { createNavbar } from "../components/navbar";
+import { createImageChild } from "./imageChildGenerator";
 
+// === Scales & limits (0..10) ===
+// appearanceScale: chance to appear at all
+// quantityScale: bias for how many to place if it appears
+const COMPONENT_SCALES = {
+Hero:            { appearanceScale: 9,  quantityScale: 1, min: 1, max: 1 },
+Image:           { appearanceScale: 7,  quantityScale: 8, min: 0, max: 6 },
+Carousel:        { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
+Boxes:           { appearanceScale: 5,  quantityScale: 2, min: 0, max: 2 },
+Card:            { appearanceScale: 6,  quantityScale: 4, min: 0, max: 8 },
+Accordion:       { appearanceScale: 0,  quantityScale: 0, min: 0, max: 0 },
+Table:           { appearanceScale: 0,  quantityScale: 0, min: 0, max: 0 },
+Comparison:      { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
+Divider:         { appearanceScale: 5,  quantityScale: 2, min: 0, max: 3 },
+Spacer:          { appearanceScale: 6,  quantityScale: 3, min: 0, max: 4 },
+LongText:        { appearanceScale: 3,  quantityScale: 1, min: 0, max: 2 },
+Text:            { appearanceScale: 6,  quantityScale: 2, min: 0, max: 5 },
+HeroSection:     { appearanceScale: 9,  quantityScale: 1, min: 1, max: 1 },
+AboutSection:    { appearanceScale: 6,  quantityScale: 1, min: 1, max: 1 },
+ContactSection:  { appearanceScale: 6,  quantityScale: 1, min: 1, max: 1 },
+ProjectsSection: { appearanceScale: 8,  quantityScale: 1, min: 1, max: 1 },
+Split:           { appearanceScale: 6,  quantityScale: 2, min: 0, max: 3 },
 
+  // Avatar intentionally omitted (only lives inside Hero)
+};
+
+// Optional overall cap so pages don’t explode
+const MAX_BODY_ITEMS = 16;
 
 export function randomLayout() {
   const container = document.getElementById("app");
@@ -55,168 +82,120 @@ export function generateRandomLayout() {
   const body = [];
 
   // Navbar is optional but fixed to the top later by randomizeOrder()
-  const includeNavbar = Math.random() < 0.7; // keep your 70%
+  const includeNavbar = Math.random() < 0.7;
   if (includeNavbar) layout.push({ type: "Navbar" });
+
+  // helper: decide how many images to stuff into Hero
+  const countForTemplate = (tpl) => (tpl >= 100 ? (8 + Math.floor(Math.random() * 5))  // 8–12 for absolute heroes
+                                                : (4 + Math.floor(Math.random() * 5))); // 4–8 for regular
 
   // --- HERO: ensure at least one ---
   const heroSelected = appear(COMPONENT_SCALES.Hero.appearanceScale);
-  if (heroSelected) {
-    const includeAvatar = Math.random() < 0.5;
-    const useAbsoluteHero = Math.random() < 0.9;
 
-    const children = [
-      { type: "Text", props: { text: getRandomTitle(), size: "text-4xl", align: "center" } },
-      { type: "Text", props: { text: getRandomSubtitle(), size: "text-lg", color: "text-secondary" } },
-    ];
-    if (includeAvatar) children.push({ type: "Avatar" });
+  const makeHero = (template) => {
+    const includeAvatar = Math.random() < 0.5;
+    const n = countForTemplate(template);
+
+    // build n images with slight variety
+    const images = Array.from({ length: n }, () => ({
+      type: "Image",
+      props: {
+        alt: "Hero image",
+        // keep sizes generous so templates can place them nicely
+        className: "w-full h-64 sm:h-72 rounded-2xl object-cover shadow-xl",
+        // optional: give your image builder a hint
+        variant: Math.random() < 0.5 ? "wide" : "square",
+      },
+    }));
+
+    if (includeAvatar) {
+      const idx = Math.floor(Math.random() * (images.length + 1)); // random position
+      images.splice(idx, 0, { type: "Avatar" });
+    }
 
     body.push({
       type: "Hero",
       layout: {
-        template: useAbsoluteHero ? 100 + Math.floor(Math.random() * 5) : Math.floor(Math.random() * 6),
-        children
-      }
+        template,
+        children: images, // << all images (plus Avatar if chosen)
+      },
     });
+  };
+
+  if (heroSelected) {
+    const useAbsoluteHero = Math.random() < 0.9;
+    const template = useAbsoluteHero
+      ? 100 + Math.floor(Math.random() * 5)
+      : Math.floor(Math.random() * 6);
+    makeHero(template);
   } else {
     // hard guarantee: add one anyway
-    body.push({
-      type: "Hero",
-      layout: {
-        template: Math.floor(Math.random() * 6),
-        children: [
-          { type: "Text", props: { text: getRandomTitle(), size: "text-4xl", align: "center" } },
-          { type: "Text", props: { text: getRandomSubtitle(), size: "text-lg", color: "text-secondary" } },
-          { type: "Avatar" }
-        ]
-      }
-    });
+    makeHero(Math.floor(Math.random() * 6));
   }
 
-  
-  // ✅ Append your new section logic here
-  // body.push({
-  //   type: "HeroSection",
-  //   layout: { template: Math.random() < 0.5 ? "split" : (Math.random() < 0.5 ? "center" : "left") },
-  //   props: { name: "Your Name", role: "Creative Engineer" }
-  // });
-
-  // if (appear(COMPONENT_SCALES.AboutSection.appearanceScale)) {
-  //   body.push({ type: "AboutSection", layout: { style: "columns" } });
-  // }
-
-  // if (appear(COMPONENT_SCALES.ContactSection.appearanceScale)) {
-  //   body.push({ type: "ContactSection" });
-  // }
-
-//   body.push({
-//   type: "ProjectsSection",
-//   // Optional: force a specific layout 33% of the time, otherwise let it randomize inside createProjectsSection
-//   layout: { layout: Math.random() < 0.33 ? (Math.random() < 0.5 ? "grid" : "masonry") : undefined },
-//   // Optional: pass custom data instead of DEFAULT_PROJECTS
-//   // props: { projects: CUSTOM_PROJECTS }
-// });
-
   // --- Poisson-ish multiplicities via biased sampler ---
-  const TYPES = Object.keys(COMPONENT_SCALES).filter(t => t !== "Hero");
-
+  const TYPES = Object.keys(COMPONENT_SCALES).filter((t) => t !== "Hero");
   for (const type of TYPES) {
     const { appearanceScale, quantityScale, min, max } = COMPONENT_SCALES[type];
-
     if (!appear(appearanceScale)) continue;
 
     let count = biasedIntBetween(min, max, quantityScale);
-    if (count === 0 && max > 0) count = 1; // if it appears, ensure at least 1
+    if (count === 0 && max > 0) count = 1;
+
+    if (type === "Split") {
+      for (let i = 0; i < count; i++) {
+        const imageFirst = Math.random() < 0.6;
+        const reverse = Math.random() < 0.5;
+        const ratios = ["1:1", "2:1", "1:2", "3:2", "2:3"];
+        const ratio = ratios[Math.floor(Math.random() * ratios.length)];
+        const textSizes = ["text-base", "text-lg", "text-xl"];
+        const size = textSizes[Math.floor(Math.random() * textSizes.length)];
+
+        const leftSpec = imageFirst
+          ? { type: "Image", props: { variant: Math.random() < 0.5 ? "wide" : "square" } }
+          : { type: "Text", props: { text: getRandomSubtitle(), size, align: "left" } };
+
+        const rightSpec = imageFirst
+          ? { type: "Text", props: { text: getRandomSubtitle(), size, align: "left" } }
+          : { type: "Image", props: { variant: Math.random() < 0.5 ? "wide" : "square" } };
+
+        body.push({
+          type: "Split",
+          props: { ratio, reverse, gap: "gap-10" },
+          layout: { align: Math.random() < 0.5 ? "left" : "right", children: [leftSpec, rightSpec] },
+        });
+      }
+      continue;
+    }
 
     for (let i = 0; i < count; i++) {
-      // Optional per-item variation
       if (type === "Image") {
         body.push({
           type: "Image",
-          // you can randomize props here if you want (sizes, aspect, etc.)
-          props: { variant: Math.random() < 0.5 ? "wide" : "square" }
+          props: { variant: Math.random() < 0.5 ? "wide" : "square" },
         });
         continue;
       }
       if (type === "Spacer") {
         body.push({
           type: "Spacer",
-          layout: { direction: "vertical", size: String(Math.floor(Math.random() * 64 + 16)) }
+          layout: { direction: "vertical", size: String(Math.floor(Math.random() * 64 + 16)) },
         });
         continue;
       }
-      if (type === "Split") {
-  for (let i = 0; i < count; i++) {
-    const imageFirst = Math.random() < 0.6;  // bias to Image left
-    const reverse = Math.random() < 0.5;     // flip on desktop
-    const ratios = ["1:1","2:1","1:2","3:2","2:3"];
-    const ratio = ratios[Math.floor(Math.random()*ratios.length)];
-
-    const textSizes = ["text-base", "text-lg", "text-xl"];
-    const size = textSizes[Math.floor(Math.random()*textSizes.length)];
-
-    const leftSpec  = imageFirst
-      ? { type: "Image", props: { variant: Math.random() < 0.5 ? "wide" : "square" } }
-      : { type: "Text",  props: { text: getRandomSubtitle(), size, align: "left" } };
-
-    const rightSpec = imageFirst
-      ? { type: "Text",  props: { text: getRandomSubtitle(), size, align: "left" } }
-      : { type: "Image", props: { variant: Math.random() < 0.5 ? "wide" : "square" } };
-
-    body.push({
-      type: "Split",
-      props: { ratio, reverse, gap: "gap-10" },
-      layout: {
-        // optional: also bias the whole block left/right in the column
-        align: Math.random() < 0.5 ? "left" : "right",
-        children: [leftSpec, rightSpec]
-      }
-    });
-  }
-  continue; // skip the generic push for Split
-}
-
       body.push({ type });
     }
   }
 
-  // Soft cap to avoid runaway pages (tune MAX_BODY_ITEMS as you like)
+  // cap & finalize
   const clamped = clampBody(body);
-
-  // Always end with a footer
   layout.push(...clamped);
   layout.push({ type: "Footer" });
-
   return layout;
 }
 
 
-// === Scales & limits (0..10) ===
-// appearanceScale: chance to appear at all
-// quantityScale: bias for how many to place if it appears
-const COMPONENT_SCALES = {
-Hero:            { appearanceScale: 9,  quantityScale: 1, min: 1, max: 1 },
-Image:           { appearanceScale: 7,  quantityScale: 8, min: 0, max: 6 },
-Carousel:        { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
-Boxes:           { appearanceScale: 5,  quantityScale: 2, min: 0, max: 2 },
-Card:            { appearanceScale: 6,  quantityScale: 4, min: 0, max: 8 },
-Accordion:       { appearanceScale: 0,  quantityScale: 0, min: 0, max: 0 },
-Table:           { appearanceScale: 0,  quantityScale: 0, min: 0, max: 0 },
-Comparison:      { appearanceScale: 4,  quantityScale: 1, min: 0, max: 2 },
-Divider:         { appearanceScale: 5,  quantityScale: 2, min: 0, max: 3 },
-Spacer:          { appearanceScale: 6,  quantityScale: 3, min: 0, max: 4 },
-LongText:        { appearanceScale: 3,  quantityScale: 1, min: 0, max: 2 },
-Text:            { appearanceScale: 6,  quantityScale: 2, min: 0, max: 5 },
-HeroSection:     { appearanceScale: 9,  quantityScale: 1, min: 1, max: 1 },
-AboutSection:    { appearanceScale: 6,  quantityScale: 1, min: 1, max: 1 },
-ContactSection:  { appearanceScale: 6,  quantityScale: 1, min: 1, max: 1 },
-ProjectsSection: { appearanceScale: 8,  quantityScale: 1, min: 1, max: 1 },
-Split:           { appearanceScale: 6,  quantityScale: 2, min: 0, max: 3 },
 
-  // Avatar intentionally omitted (only lives inside Hero)
-};
-
-// Optional overall cap so pages don’t explode
-const MAX_BODY_ITEMS = 16;
 
 // --- helpers ---
 function appear(scale0to10) {

@@ -209,6 +209,6 @@ export function createFooter() {
 
   const randomIndex = Math.floor(Math.random() * footerTemplates.length);
   footer.innerHTML = footerTemplates[randomIndex];
-
+  console.log("Choose FOOTER ===================================", footerTemplates[randomIndex]);
   return footer;
 }

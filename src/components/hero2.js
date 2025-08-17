@@ -5,7 +5,7 @@ import { generateTreemapLayoutTemplate } from '../layouts/treeTemplate.js';
 import { generateRandomLayoutTemplate as generateGridLayout } from '../layouts/treebugTemplate.js';
 
 // --- Layout Selector ---
-const FORCE_TEMPLATE = 'premade'; // 'treemap', 'premade', 'masonry', 'grid' or null
+const FORCE_TEMPLATE = null; // 'treemap', 'premade', 'masonry', 'grid' or null
 
 function getRandomLayout() {
   if (FORCE_TEMPLATE === 'treemap') {
@@ -98,11 +98,12 @@ export function createAbsoluteHero({ children = [], template = 0 } = {}) {
 blockEl.innerHTML = `
   <div
     contenteditable="true"
-    class="flex justify-center items-center h-full text-center text-xl text-base-content focus:outline-none"
+    class="flex justify-center items-center w-full h-full text-center text-xl text-base-content focus:outline-none"
     style="opacity: 0.8;"
   >
     Block ${index + 1}
   </div>`;
+
 
     }
 
