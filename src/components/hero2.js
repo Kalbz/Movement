@@ -72,9 +72,9 @@ export function createAbsoluteHero({ children = [], template = 0 } = {}) {
   }
 
   // Optional dev grid (comment out if not needed)
-  layoutBox.style.backgroundImage = `
-    linear-gradient(to right, rgba(0,0,255,0.05) 1px, transparent 1px)
-  `;
+  // layoutBox.style.backgroundImage = `
+  //   linear-gradient(to right, rgba(0,0,255,0.05) 1px, transparent 1px)
+  // `;
   layoutBox.style.backgroundSize = `${100 / 4}% 100%`; // 4 columns by default
 
   // Render blocks

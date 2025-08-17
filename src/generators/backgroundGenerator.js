@@ -93,29 +93,29 @@ function hslToHex({ h, s, l }) {
   return "#" + [r, g, b].map(n => Math.round((n + m) * 255).toString(16).padStart(2, "0")).join("");
 }
 
-// New: SVG dots background (portfolio-style)
-function applyDotsBackground(target, { opacity = 0.12 } = {}) {
-  const size = 40 + Math.floor(Math.random() * 60);
-  const r = 1 + Math.floor(Math.random() * 2);
-  const translate = 10 + Math.random() * 30;
-  const speed = 5000 + Math.floor(Math.random() * 6000);
+// // New: SVG dots background (portfolio-style)
+// function applyDotsBackground(target, { opacity = 0.12 } = {}) {
+//   const size = 40 + Math.floor(Math.random() * 60);
+//   const r = 1 + Math.floor(Math.random() * 2);
+//   const translate = 10 + Math.random() * 30;
+//   const speed = 5000 + Math.floor(Math.random() * 6000);
 
-  const svg = `
-<svg xmlns="http://www.w3.org/2000/svg" class="trianglify-bg" style="position:absolute;inset:0;z-index:-1;animation:bgdrift ${speed}ms linear infinite">
-  <defs>
-    <pattern id="dots" x="0" y="0" width="${size}" height="${size}" patternUnits="userSpaceOnUse">
-      <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="currentColor" opacity="${opacity}"/>
-    </pattern>
-  </defs>
-  <rect width="100%" height="100%" fill="url(#dots)" class="text-black" transform="translate(${translate}, ${translate})" />
-  <style>
-    @keyframes bgdrift { 0% { transform: translate(0,0); } 50% { transform: translate(-2%, -2%);} 100% { transform: translate(0,0);} }
-  </style>
-</svg>`;
-  const div = document.createElement("div");
-  div.innerHTML = svg.trim();
-  target.appendChild(div.firstChild);
-}
+//   const svg = `
+// <svg xmlns="http://www.w3.org/2000/svg" class="trianglify-bg" style="position:absolute;inset:0;z-index:-1;animation:bgdrift ${speed}ms linear infinite">
+//   <defs>
+//     <pattern id="dots" x="0" y="0" width="${size}" height="${size}" patternUnits="userSpaceOnUse">
+//       <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="currentColor" opacity="${opacity}"/>
+//     </pattern>
+//   </defs>
+//   <rect width="100%" height="100%" fill="url(#dots)" class="text-black" transform="translate(${translate}, ${translate})" />
+//   <style>
+//     @keyframes bgdrift { 0% { transform: translate(0,0); } 50% { transform: translate(-2%, -2%);} 100% { transform: translate(0,0);} }
+//   </style>
+// </svg>`;
+//   const div = document.createElement("div");
+//   div.innerHTML = svg.trim();
+//   target.appendChild(div.firstChild);
+// }
 
 export async function randomBackground(selector = "body", opts = {}) {
   const target = document.querySelector(selector);
@@ -130,7 +130,7 @@ export async function randomBackground(selector = "body", opts = {}) {
   target.style.backgroundImage = "";
   target.style.background = "";
 
-  const mode = opts.mode || ["trianglify", "gradient", "plain", "image", "dots"][Math.floor(Math.random() * 5)];
+  const mode = opts.mode || ["trianglify", "gradient", "plain", "image"][Math.floor(Math.random() * 4)];
 
   if (mode === "trianglify") {
     const seedArray = new Uint32Array(1);
@@ -171,8 +171,8 @@ export async function randomBackground(selector = "body", opts = {}) {
     const color = palette[Math.random() < 0.5 ? 3 : 4];
     target.style.background = color;
 
-  } else if (mode === "dots") {
-    applyDotsBackground(document.body, { opacity: 0.9 });
+  // } else if (mode === "dots") {
+  //   applyDotsBackground(document.body, { opacity: 0.9 });
 
   } else if (mode === "image") {
     const themes = [
