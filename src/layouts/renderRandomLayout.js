@@ -75,7 +75,7 @@ export async function createComponentFromName(type, layout = {}, props = {}, the
 
   return createHeroSection({
     variant,
-    name: props?.name || "Your Name",
+    name: props?.name || "Kalle Engblom",
     role: props?.role || "Creative Engineer",
     headline: props?.headline,   // optional explicit headline
     withBlobs: props?.withBlobs ?? true,

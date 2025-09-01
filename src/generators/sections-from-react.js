@@ -73,7 +73,7 @@ function makeBlobSVG({ rng, size = 280, className = "", opacity = 0.12 }) {
 // --- HERO (variants: center | split | left) ---
 export function createHeroSection({
   variant = "center",
-  name = "Your Name",
+  name = "Kalle Engblom",
   role = "Creative Engineer",
   headline,
   withBlobs = true,
@@ -95,7 +95,9 @@ export function createHeroSection({
   // Headline generator (if none provided)
   function rand(arr) { return arr[Math.floor((seed != null ? rng() : Math.random()) * arr.length)]; }
   const finalHeadline = headline || [rand(["I build", "I craft", "I design", "I prototype"]), rand(["dynamic", "living", "playful", "expressive", "procedural"]), rand(["experiences", "interfaces", "tools", "web art"])].join(" ");
-
+    if (variant === "split") {
+    variant = "center"; // or "left" if you prefer
+    }
   if (variant === "center") {
     const wrap = document.createElement("div");
     wrap.className = "text-center space-y-4";
@@ -175,7 +177,7 @@ export function createAboutSection({ style = "columns", seed, withBlob = true } 
 
   const head = document.createElement("div");
   head.className = "flex items-baseline justify-between";
-  head.innerHTML = `<h2 class="text-2xl sm:text-3xl font-extrabold">About</h2><span class="opacity-60 text-sm">style: ${style}</span>`;
+  head.innerHTML = `<h2 class="text-2xl sm:text-3xl font-extrabold">About</h2><span class="opacity-60 text-sm"></span>`;
   section.appendChild(head);
 
   if (style === "simple") {
@@ -329,6 +331,7 @@ function createProjectCard(project, rng) {
  *   - withHeader: boolean (default true)
  *   - seed: number|string (optional; for deterministic layout/flair)
  */
+// --- Projects section (layouts: grid only, spotlight removed) ---
 export function createProjectsSection({
   layout,
   projects = DEFAULT_PROJECTS,
@@ -341,57 +344,34 @@ export function createProjectsSection({
   section.id = "projects";
   section.className = "space-y-6 text-left"; // keep page-wide text-center from app scoped; force local left
 
-  if (!layout) layout = pick(rng, ["grid", "masonry", "spotlight"]);
+  // normalize layouts: remove masonry, and treat spotlight as grid
+  if (layout === "masonry") layout = "grid";
+  if (!layout) layout = "grid";
 
   if (withHeader) {
     const head = document.createElement("div");
     head.className = "flex items-baseline justify-between";
     head.innerHTML = `
-      <h2 class="text-2xl sm:text-3xl font-extrabold">Selected Projects</h2>`;
+      <h2 class="text-2xl sm:text-3xl p-4 font-extrabold">Selected Projects</h2>`;
     section.appendChild(head);
   }
 
-  if (layout === "grid") {
+  // GRID (default and fallback)
+  const renderGrid = () => {
     const grid = document.createElement("div");
     grid.className = "grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
     projects.forEach((p) => grid.appendChild(createProjectCard(p, rng)));
     section.appendChild(grid);
     return section;
+  };
+
+  if (layout === "grid" || layout === "spotlight") {
+    // spotlight now just renders the same balanced grid to avoid oversized first item
+    return renderGrid();
   }
 
-  if (layout === "masonry") {
-    const colWrap = document.createElement("div");
-    colWrap.className = "columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]";
-    const inner = document.createElement("div");
-    inner.className = "contents";
-    projects.forEach((p) => {
-      const wrapper = document.createElement("div");
-      wrapper.className = "mb-5 break-inside-avoid";
-      wrapper.appendChild(createProjectCard(p, rng));
-      inner.appendChild(wrapper);
-    });
-    colWrap.appendChild(inner);
-    section.appendChild(colWrap);
-    return section;
-  }
-  //update this later 
-  // spotlight
-  const [first, ...rest] = projects;
-  const grid = document.createElement("div");
-  grid.className = "grid grid-cols-1 lg:grid-cols-3 gap-6";
-
-  const big = document.createElement("div");
-  big.className = "lg:col-span-2";
-  big.appendChild(createProjectCard(first || {}, rng));
-  grid.appendChild(big);
-
-  const small = document.createElement("div");
-  small.className = "grid grid-cols-1 gap-6";
-  rest.forEach((p) => small.appendChild(createProjectCard(p, rng)));
-  grid.appendChild(small);
-
-  section.appendChild(grid);
-  return section;
+  // Fallback safety
+  return renderGrid();
 }
 
 

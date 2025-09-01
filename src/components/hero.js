@@ -58,8 +58,8 @@ function createTemplateHero(hero, templateIndex, children, textChildren = []) {
   const image = Math.random() < 0.5 ? stockUrl : triUrl;
 
   // Get text content from children if available
-const titleText = textChildren?.[0]?.props?.text || "Dynamic Hero";
-const subtitleText = textChildren?.[1]?.props?.text || "This hero got a random background.";
+const titleText = textChildren?.[0]?.props?.text || "";
+const subtitleText = textChildren?.[1]?.props?.text || "";
 
 // Generate random position in viewport units (20vw–80vw)
 const useLeft = Math.random() < 0.5; // 50% chance left or right
@@ -95,7 +95,6 @@ const positionStyle = useLeft
       <div class="lg:pl-6 text-center lg:text-left">
         <h1 class="text-5xl font-bold">${titleText}</h1>
         <p class="py-6">${subtitleText}</p>
-        <button class="btn btn-primary">Get Started</button>
       </div>
       <img
         src="${image}"
@@ -164,7 +163,6 @@ const positionStyle = useLeft
       <div class="lg:pr-6 text-center lg:text-right">
         <h1 class="text-5xl font-bold">${titleText}</h1>
         <p class="py-6">${subtitleText}</p>
-        <button class="btn btn-primary">Get Started</button>
       </div>
     </div>
     `,
@@ -249,17 +247,6 @@ function createRandomHeroTemplate(hero) {
   const image = Math.random() < 0.5 ? stockUrl : triUrl;
 
   const templates = [
-    `
-    <div class="hero-content text-center">
-      <div class="max-w-md">
-        <h1 class="text-5xl font-bold">Dynamic Hero</h1>
-        <p class="py-6">This hero got a random background pattern and a random stock photo size.</p>
-        <button class="btn btn-primary">Let's Go!</button>
-      </div>
-    </div>
-    `,
-
-    // ==============================================================
 
     `
     <div class="hero-content flex flex-col lg:flex-row items-center justify-center">
@@ -271,7 +258,6 @@ function createRandomHeroTemplate(hero) {
       <div class="lg:pl-6 text-center lg:text-left">
         <h1 class="text-5xl font-bold">Box Office News!</h1>
         <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi.</p>
-        <button class="btn btn-primary">Get Started</button>
       </div>
             <img
         src="${image}"
@@ -340,7 +326,6 @@ function createRandomHeroTemplate(hero) {
       <div class="lg:pr-6 text-center lg:text-right">
         <h1 class="text-5xl font-bold">Box Office News!</h1>
         <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi.</p>
-        <button class="btn btn-primary">Get Started</button>
       </div>
     </div>
     `,

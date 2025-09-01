@@ -1,9 +1,9 @@
 
 export function generateMasonryLayoutTemplate({
-  numBlocks = 20,
+  numBlocks = 15,
   columns = 4,
   minHeight = 10,
-  maxHeight = 30
+  maxHeight = 50
 } = {}) {
   const colWidth = 100 / columns; // percentage
   const colHeights = Array(columns).fill(0); // in percentage units

@@ -9,25 +9,25 @@ export async function createBoxes(theme = "light") {
     ? 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 rounded-box'
     : 'flex flex-wrap justify-center gap-6 rounded-box';
 
-const controls = document.createElement('div');
-controls.className = 'flex gap-4';
+// const controls = document.createElement('div');
+// controls.className = 'flex gap-4';
 
-const plusBtn = document.createElement('button');
-plusBtn.textContent = '+';
-plusBtn.className = 'btn bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-2 rounded';
-plusBtn.onclick = () => addBox();
+// const plusBtn = document.createElement('button');
+// plusBtn.textContent = '+';
+// plusBtn.className = 'btn bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-2 rounded';
+// plusBtn.onclick = () => addBox();
 
-const minusBtn = document.createElement('button');
-minusBtn.textContent = '–';
-minusBtn.className = 'btn bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded';
-minusBtn.onclick = () => {
-  if (wrapper.lastChild) wrapper.removeChild(wrapper.lastChild);
-};
+// const minusBtn = document.createElement('button');
+// minusBtn.textContent = '–';
+// minusBtn.className = 'btn bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded';
+// minusBtn.onclick = () => {
+//   if (wrapper.lastChild) wrapper.removeChild(wrapper.lastChild);
+// };
 
-controls.appendChild(plusBtn);
-controls.appendChild(minusBtn);
+// controls.appendChild(plusBtn);
+// controls.appendChild(minusBtn);
 
-  container.appendChild(controls);
+//   container.appendChild(controls);
   container.appendChild(wrapper);
 
   const numItems = Math.floor(Math.random() * 5) + 4;

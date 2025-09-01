@@ -45,13 +45,20 @@ function getRandomLayout() {
 }
 
 
-
 export function createAbsoluteHero({ children = [], template = 0 } = {}) {
   const templateData = getRandomLayout();
   let blocks = templateData.blocks;
 
   // Optional: add spacing between blocks
   blocks = maybeApplyGapsToBlocks(blocks);
+
+  // ✅ Keep only as many blocks as we have images
+  if (children.length) {
+    blocks = blocks.slice(0, children.length);
+  } else {
+    // No children: show nothing instead of "Block N" placeholders
+    blocks = [];
+  }
 
   console.log("🧩 Layout:", templateData.name);
   console.log("📦 Blocks:", blocks.length);
@@ -63,7 +70,6 @@ export function createAbsoluteHero({ children = [], template = 0 } = {}) {
   layoutBox.className = 'relative w-[100vw] rounded-box';
   layoutBox.style.maxWidth = '1200px';
 
-  // Optional layout height
   if (templateData.maxHeight) {
     const pxHeight = (templateData.maxHeight / 100) * window.innerHeight;
     layoutBox.style.height = `${pxHeight}px`;
@@ -71,16 +77,11 @@ export function createAbsoluteHero({ children = [], template = 0 } = {}) {
     layoutBox.style.height = '90vh';
   }
 
-  // Optional dev grid (comment out if not needed)
-  // layoutBox.style.backgroundImage = `
-  //   linear-gradient(to right, rgba(0,0,255,0.05) 1px, transparent 1px)
-  // `;
-  layoutBox.style.backgroundSize = `${100 / 4}% 100%`; // 4 columns by default
-
   // Render blocks
   blocks.forEach((block, index) => {
     const blockEl = document.createElement('div');
-    blockEl.className = 'absolute p-4 bg-primary shadow-xl border rounded-lg overflow-auto';
+    // ✅ remove padding/background; hide scrollbars
+    blockEl.className = 'absolute rounded-lg overflow-hidden';
     blockEl.style = `
       top: ${block.top};
       left: ${block.left};
@@ -90,21 +91,20 @@ export function createAbsoluteHero({ children = [], template = 0 } = {}) {
       box-sizing: border-box;
     `;
 
-    blockEl.title = `Block ${index + 1}`;
-
-    if (children[index]) {
-      blockEl.appendChild(children[index]);
-    } else {
-blockEl.innerHTML = `
-  <div
-    contenteditable="true"
-    class="flex justify-center items-center w-full h-full text-center text-xl text-base-content focus:outline-none"
-    style="opacity: 0.8;"
-  >
-    Block ${index + 1}
-  </div>`;
-
-
+    const child = children[index];
+    if (child) {
+      // ✅ Make images fill the block
+      if (child.tagName === 'IMG') {
+        child.style.width = '100%';
+        child.style.height = '100%';
+        child.style.objectFit = 'cover';
+        child.style.display = 'block';
+      } else {
+        // If it isn’t an <img>, still make it fill
+        child.style.width = '100%';
+        child.style.height = '100%';
+      }
+      blockEl.appendChild(child);
     }
 
     layoutBox.appendChild(blockEl);
@@ -113,6 +113,7 @@ blockEl.innerHTML = `
   wrapper.appendChild(layoutBox);
   return wrapper;
 }
+
 
 
 // Optional helper to add gaps between blocks

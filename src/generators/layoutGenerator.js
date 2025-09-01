@@ -23,7 +23,7 @@ Text:            { appearanceScale: 6,  quantityScale: 2, min: 0, max: 5 },
 HeroSection:     { appearanceScale: 9,  quantityScale: 1, min: 1, max: 1 },
 AboutSection:    { appearanceScale: 6,  quantityScale: 1, min: 1, max: 1 },
 ContactSection:  { appearanceScale: 6,  quantityScale: 1, min: 1, max: 1 },
-ProjectsSection: { appearanceScale: 8,  quantityScale: 1, min: 1, max: 1 },
+ProjectsSection: { appearanceScale: 10,  quantityScale: 1, min: 1, max: 1 },
 Split:           { appearanceScale: 6,  quantityScale: 2, min: 0, max: 3 },
 
   // Avatar intentionally omitted (only lives inside Hero)
